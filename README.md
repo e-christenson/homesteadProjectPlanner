@@ -3,6 +3,8 @@
 This repository will serve as an example for Madison College's Enterprise Java Class.
 
 ### Problem Statement
+What should I do today?  A question that has been around since the beginning of time.   When we ask ourselves this question – our brain automatically scans our internal “things I have to-do” list and starts sorting to find a solution that makes sense.    To answer the question we consider things like what day it is, the time of day, how much time we have available, the weather outside and so on.
+What if we had an organizer app that could do not only keep track of our projects…. but also suggest what projects are a good fit right now.
 
 
 
