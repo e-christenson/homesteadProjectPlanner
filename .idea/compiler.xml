@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="yourindieproject" />
+        <module name="homesteadProjectPlanner" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="homesteadProjectPlanner" target="1.7" />
+      <module name="yourindieproject" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

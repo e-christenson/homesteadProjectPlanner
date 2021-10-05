@@ -29,6 +29,7 @@
         <junit-vintage-version>4.12.0</junit-vintage-version>
         <jupiter-version>5.0.0</jupiter-version>
 
+        <hibernate-version>5.4.4.Final</hibernate-version>
         <hibernate-core-version>5.4.4.Final</hibernate-core-version>
 
     </properties>
@@ -36,13 +37,7 @@
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-core</artifactId>
 
-    <version>${hibernate-core}</version>
-
-</dependency>
 
 
         <dependency>
@@ -69,6 +64,20 @@
         <version>${junit.version}</version>
         <scope>test</scope>
     </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.junit.platform</groupId>
@@ -145,4 +154,5 @@
             </plugin>
         </plugins>
     </pluginManagement>
+    </build>
 </project>
