@@ -9,141 +9,83 @@ import java.util.Objects;
 
  */
 
-@Entity(name = "book")
-@Table(name = "book")
+@Entity(name = "user")
+@Table(name = "user")
 public class User {
-    private String title;
-    private String author;
+
+    private int id;
+    private String name;
+    private String email;
+    private String password;
+    private int zip_code;
+
+
+   public User() {
+    }
+
+    public User(int id,String name, String email, String password, int zip_code) {
+       this.id = id;
+       this.name = name;
+        this.email = email;
+        this.password = password;
+        this.zip_code = zip_code;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int id;
-    private String isbn;
-    @Column(name = "publication_year")
-    private int publicationYear;
-
-    /**
-     * Instantiates a new Book.
-     */
-    public User() {
-    }
-
-    /**
-     * Instantiates a new Book.
-     *
-     * @param title           the title
-     * @param author          the author
-     * @param id              the id
-     * @param isbn            the isbn
-     * @param publicationYear the publication year
-     */
-    public User(String title, String author, String isbn, int publicationYear) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.publicationYear = publicationYear;
-    }
 
 
-    /**
-     * Gets title.
-     *
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
-    }
 
-    /**
-     * Sets title.
-     *
-     * @param title the title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
-    /**
-     * Gets author.
-     *
-     * @return the author
-     */
-    public String getAuthor() {
-        return author;
-    }
-
-    /**
-     * Sets author.
-     *
-     * @param author the author
-     */
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * Gets isbn.
-     *
-     * @return the isbn
-     */
-    public String getIsbn() {
-        return isbn;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Sets isbn.
-     *
-     * @param isbn the isbn
-     */
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * Gets publication year.
-     *
-     * @return the publication year
-     */
-    public int getPublicationYear() {
-        return publicationYear;
+    public String getEmail() {
+        return email;
     }
 
-    /**
-     * Sets publication year.
-     *
-     * @param publicationYear the publication year
-     */
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(int zip_code) {
+        this.zip_code = zip_code;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", id=" + id +
-                ", isbn='" + isbn + '\'' +
-                ", publicationYear=" + publicationYear +
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", zip_code=" + zip_code +
                 '}';
     }
 
@@ -152,11 +94,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && publicationYear == user.publicationYear && Objects.equals(title, user.title) && Objects.equals(author, user.author) && Objects.equals(isbn, user.isbn);
+        return id == user.id && zip_code == user.zip_code && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, author, id, isbn, publicationYear);
+        return Objects.hash(id, name, email, password, zip_code);
     }
 }
+

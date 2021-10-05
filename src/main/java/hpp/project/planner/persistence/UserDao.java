@@ -16,7 +16,7 @@ import java.util.List;
  Data access class to access books
  *
  */
-public class BookDao {
+public class UserDao {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
@@ -26,10 +26,10 @@ public class BookDao {
      */
     public User getById(int id) {
         Session session = sessionFactory.openSession();
-        logger.info("session factory  " );
+
         User user = session.get( User.class, id );
         session.close();
-        logger.info("information on book returned by bookDao: " + user);
+        logger.info("information on book returned by bookDao getById method: " + user);
         return user;
     }
 

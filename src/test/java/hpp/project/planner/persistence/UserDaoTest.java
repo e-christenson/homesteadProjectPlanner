@@ -18,14 +18,14 @@ class UserDaoTest {
     /**
      * The Dao.
      */
-    BookDao dao;
+    UserDao dao;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        dao = new BookDao();
+        dao = new UserDao();
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }
@@ -35,12 +35,12 @@ class UserDaoTest {
      */
     @Test
     void getByIdSucess() {
-        User retrievedUser = dao.getById(3);
-        assertEquals("Java: A Beginner’s Guide (Sixth Edition)", retrievedUser.getTitle());
-        assertEquals("Herbert Schilt", retrievedUser.getAuthor());
-        assertEquals("978-0071809252", retrievedUser.getIsbn());
+        User user1 = dao.getById(1);
 
-        assertEquals(2014, retrievedUser.getPublicationYear());
+       assertEquals("Bob Dedrich", user1.getName());
+       assertEquals("bob@email.com", user1.getEmail());
+       assertEquals("password1", user1.getPassword());
+       assertEquals(53536, user1.getZip_code());
 
     }
 
@@ -50,16 +50,20 @@ class UserDaoTest {
     @Test
     void saveOrUpdate() {
         User user1 = dao.getById(1);
-        System.out.println("getting book index 1 from DB  " + user1.toString());
-
-        user1.setIsbn("1111");
+        user1.setName("Not Bob");
 
         dao.saveOrUpdate(user1);
 
         user1 = dao.getById(1);
 
         //verify the isbn update took
-        assertEquals("1111", user1.getIsbn());
+        assertEquals("Not Bob", user1.getName());
+        //check other known variables to make sure they didn't change
+        assertEquals("bob@email.com", user1.getEmail());
+        assertEquals("password1", user1.getPassword());
+        assertEquals(53536, user1.getZip_code());
+
+
 
     }
 
@@ -70,7 +74,7 @@ class UserDaoTest {
     void insert() {
 
         // create new book without ID because db auto assigns this.  insert into db with dao
-        User newUser = new User("Test Book", "Test Author", "22", 2021);
+        User newUser = new User(4,"Test user", "Test@email.com", "password", 20021);
         dao.insert(newUser);
         //we have no idea of insertions ID bc our sql clear script does not wipe the table....so we grab all books and enter in array
         //original db had 3 entries.  now we should have 4 from insert
