@@ -1,4 +1,4 @@
-package edu.matc.entity;
+package hpp.project.planner.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity(name = "book")
 @Table(name = "book")
-public class Book {
+public class User {
     private String title;
     private String author;
 
@@ -26,7 +26,7 @@ public class Book {
     /**
      * Instantiates a new Book.
      */
-    public Book() {
+    public User() {
     }
 
     /**
@@ -38,7 +38,7 @@ public class Book {
      * @param isbn            the isbn
      * @param publicationYear the publication year
      */
-    public Book(String title, String author, String isbn, int publicationYear) {
+    public User(String title, String author, String isbn, int publicationYear) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
@@ -151,8 +151,8 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return id == book.id && publicationYear == book.publicationYear && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(isbn, book.isbn);
+        User user = (User) o;
+        return id == user.id && publicationYear == user.publicationYear && Objects.equals(title, user.title) && Objects.equals(author, user.author) && Objects.equals(isbn, user.isbn);
     }
 
     @Override

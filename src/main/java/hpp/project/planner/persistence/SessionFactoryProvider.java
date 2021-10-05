@@ -1,4 +1,4 @@
-package edu.matc.persistence;
+package hpp.project.planner.persistence;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;

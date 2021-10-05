@@ -1,6 +1,6 @@
-package edu.matc.persistence;
+package hpp.project.planner.persistence;
 
-import edu.matc.entity.Book;
+import hpp.project.planner.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -24,36 +24,37 @@ public class BookDao {
     /**
      * Get book by id
      */
-    public Book getById(int id) {
+    public User getById(int id) {
         Session session = sessionFactory.openSession();
-        Book book = session.get( Book.class, id );
+        logger.info("session factory  " );
+        User user = session.get( User.class, id );
         session.close();
-        logger.info("information on book returned by bookDao: " +book);
-        return book;
+        logger.info("information on book returned by bookDao: " + user);
+        return user;
     }
 
     /**
      * update book
-     * @param book  Book to be inserted or updated
+     * @param user  Book to be inserted or updated
      */
-    public void saveOrUpdate(Book book) {
+    public void saveOrUpdate(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(book);
+        session.saveOrUpdate(user);
         transaction.commit();
         session.close();
-        logger.info("Save or UPDATE ran with variables: " +book);
+        logger.info("Save or UPDATE ran with variables: " + user);
     }
 
     /**
      * update Book
-     * @param book  Book to be inserted or updated
+     * @param user  Book to be inserted or updated
      */
-    public int insert(Book book) {
+    public int insert(User user) {
         int id = 0;
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        id = (int)session.save(book);
+        id = (int)session.save(user);
         logger.info("Id pulled from insert: "+id);
         transaction.commit();
         session.close();
@@ -62,12 +63,12 @@ public class BookDao {
 
     /**
      * Delete a book
-     * @param book Book to be deleted
+     * @param user Book to be deleted
      */
-    public void delete(Book book) {
+    public void delete(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(book);
+        session.delete(user);
         transaction.commit();
         session.close();
 
@@ -78,20 +79,20 @@ public class BookDao {
      *
      * @return All books
      */
-    public List<Book> getAll() {
+    public List<User> getAll() {
 
         Session session = sessionFactory.openSession();
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
-        CriteriaQuery<Book> query = builder.createQuery( Book.class );
-        Root<Book> root = query.from( Book.class );
-        List<Book> books = session.createQuery( query ).getResultList();
+        CriteriaQuery<User> query = builder.createQuery( User.class );
+        Root<User> root = query.from( User.class );
+        List<User> users = session.createQuery( query ).getResultList();
 
-        logger.debug("The list of books " + books);
+        logger.debug("The list of books " + users);
         session.close();
 
-        return books;
+        return users;
 
 
     }
