@@ -63,8 +63,6 @@ class UserDaoTest {
         assertEquals("password1", user1.getPassword());
         assertEquals(53536, user1.getZip_code());
 
-
-
     }
 
     /**
@@ -73,16 +71,19 @@ class UserDaoTest {
     @Test
     void insert() {
 
-        // create new book without ID because db auto assigns this.  insert into db with dao
-        User newUser = new User(4,"Test user", "Test@email.com", "password", 20021);
+        // create new user
+        User newUser = new User(0,"Test user", "Test@email.com", "password", 20021);
         dao.insert(newUser);
+
         //we have no idea of insertions ID bc our sql clear script does not wipe the table....so we grab all books and enter in array
         //original db had 3 entries.  now we should have 4 from insert
-        ArrayList<User> booksArray = new ArrayList<>();
-        booksArray = (ArrayList<User>) dao.getAll();
-        //call the 4th item in the array and see if its the new book
-        User newUserRetreived = booksArray.get(3);
-        assertEquals(newUser, newUserRetreived);
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers = (ArrayList<User>) dao.getAll();
+        //call the 4th item in the array and see if its the new user
+        int usersSize = allUsers.size();
+        //figure out how many users on the users array, assign last user in db to variable
+        User lastUserInDb = allUsers.get(usersSize-1);
+        assertEquals(newUser, lastUserInDb);
 
     }
 
@@ -94,11 +95,10 @@ class UserDaoTest {
         //remove ID one and test
         User user1 = dao.getById(1);
         dao.delete(user1);
-        //get all the books from the table.  first book in this array should not match original book 1
-        ArrayList<User> booksArray = new ArrayList<>();
-        booksArray = (ArrayList<User>) dao.getAll();
-
-        assertNotEquals(user1, booksArray.get(0));
+        //get all the users from the table.  first user in this array should not match original book 1
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers = (ArrayList<User>) dao.getAll();
+        assertNotEquals(user1, allUsers.get(0));
     }
 
     /**
@@ -106,12 +106,12 @@ class UserDaoTest {
      */
     @Test
     void getAll() {
-        //we know there are 3 books in the db from setup.  so we load all into an array and check length is 3
-        ArrayList<User> booksArray = new ArrayList<>();
-        booksArray = (ArrayList<User>) dao.getAll();
-        int totalBooks = booksArray.size();
+        //we know there are 3 users in the db from setup.  so we load all into an array and check length is 3
+        ArrayList<User> allUsers = new ArrayList<>();
+        allUsers = (ArrayList<User>) dao.getAll();
+        int totalBooks = allUsers.size();
 
-                assertEquals(3,booksArray.size());
+        assertEquals(3,allUsers.size());
 
     }
 }
