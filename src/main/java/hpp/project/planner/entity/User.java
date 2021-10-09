@@ -3,13 +3,15 @@ package hpp.project.planner.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
 
  */
 
-@Entity(name = "user")
+@Entity(name = "User")
 @Table(name = "user")
 public class User {
 
@@ -18,6 +20,11 @@ public class User {
     private String email;
     private String password;
     private int zip_code;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+
+
+    private Set<Project> Projects = new HashSet<>();
 
 
    public User() {
@@ -76,6 +83,14 @@ public class User {
 
     public void setZip_code(int zip_code) {
         this.zip_code = zip_code;
+    }
+
+    public Set<Project> getProjects() {
+        return Projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        Projects = projects;
     }
 
     @Override
