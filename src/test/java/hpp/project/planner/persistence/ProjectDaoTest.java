@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * The type Book dao test.
  */
 
-class UserDaoTest {
+class ProjectDaoTest {
     /**
      * The Dao.
      */

@@ -29,7 +29,7 @@ public class ProjectDao {
 
         Project project = session.get( Project.class, id );
         session.close();
-        logger.info("information on book returned by bookDao getById method: " + project);
+        logger.info("getById PROJECT METHOD *** : " + project);
         return project;
     }
 
@@ -43,7 +43,7 @@ public class ProjectDao {
         session.saveOrUpdate(project);
         transaction.commit();
         session.close();
-        logger.info("Save or UPDATE ran with variables: " + project);
+        logger.info("Save or UPDATE PROJECT: " + project);
     }
 
     /**
@@ -55,7 +55,7 @@ public class ProjectDao {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         id = (int)session.save(project);
-        logger.info("Id pulled from insert: "+id);
+        logger.info(" PROJECT Id pulled from insert: "+id);
         transaction.commit();
         session.close();
         return id;

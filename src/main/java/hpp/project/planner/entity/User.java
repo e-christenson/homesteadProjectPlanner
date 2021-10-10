@@ -15,6 +15,10 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+
     private int id;
     private String name;
     private String email;
@@ -38,9 +42,6 @@ public class User {
         this.zip_code = zip_code;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
 
 
 
@@ -93,6 +94,16 @@ public class User {
         Projects = projects;
     }
 
+    public void addProject(Project project) {
+        Projects.add(project);
+        project.setUser(this);
+    }
+
+    public void removeProject(Project project) {
+        Projects.add(project);
+        project.setUser(null);
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -116,5 +127,7 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, name, email, password, zip_code);
     }
+
+
 }
 

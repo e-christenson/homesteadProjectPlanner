@@ -29,7 +29,7 @@ public class UserDao {
 
         User user = session.get( User.class, id );
         session.close();
-        logger.info("information on book returned by bookDao getById method: " + user);
+        logger.info("method***getById returns***   :  " + user);
         return user;
     }
 
@@ -56,10 +56,13 @@ public class UserDao {
         Transaction transaction = session.beginTransaction();
         id = (int)session.save(user);
         logger.info("Id pulled from insert: "+id);
+        logger.info("user inserted WITH PROJECT : "+user.getProjects());
         transaction.commit();
         session.close();
         return id;
     }
+
+
 
     /**
      * Delete a book
@@ -89,7 +92,7 @@ public class UserDao {
         Root<User> root = query.from( User.class );
         List<User> users = session.createQuery( query ).getResultList();
 
-        logger.debug("The list of books " + users);
+        logger.debug("***method***getAll user***   :  " + users);
         session.close();
 
         return users;
