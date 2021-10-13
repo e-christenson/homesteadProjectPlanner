@@ -1,6 +1,7 @@
 package hpp.project.planner.persistence;
 
 import hpp.project.planner.entity.Project;
+import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.test.util.Database;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The type Book dao test.
@@ -19,14 +19,14 @@ class ProjectDaoTest {
     /**
      * The Dao.
      */
-    UserDao dao;
+    ProjectDao dao;
 
     /**
      * Sets up.
      */
     @BeforeEach
     void setUp() {
-        dao = new UserDao();
+        dao = new ProjectDao();
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }
@@ -35,13 +35,13 @@ class ProjectDaoTest {
      * Gets by id sucess.
      */
     @Test
-    void getByIdSucess() {
-        User user1 = dao.getById(1);
+    void getByIdSuccess() {
+        Project project1 = dao.getById(3);
 
-       assertEquals("Bob Dedrich", user1.getName());
-       assertEquals("bob@email.com", user1.getEmail());
-       assertEquals("password1", user1.getPassword());
-       assertEquals(53536, user1.getZip_code());
+        assertEquals("Take out trash", project1.getProject_name());
+        assertEquals(2, project1.getUser().getId());
+        assertEquals("y", project1.getMon_fri());
+        assertEquals("n", project1.getSat_sun());
 
     }
 
@@ -50,82 +50,45 @@ class ProjectDaoTest {
      */
     @Test
     void saveOrUpdate() {
-        User user1 = dao.getById(1);
-        user1.setName("Not Bob");
-
-        dao.saveOrUpdate(user1);
-
-        user1 = dao.getById(1);
-
-        //verify the isbn update took
-        assertEquals("Not Bob", user1.getName());
-        //check other known variables to make sure they didn't change
-        assertEquals("bob@email.com", user1.getEmail());
-        assertEquals("password1", user1.getPassword());
-        assertEquals(53536, user1.getZip_code());
+        String newProjectName = "power wash driveway";
+        Project projectToUpdate = dao.getById(1);
+        projectToUpdate.setProject_name(newProjectName);
+        dao.saveOrUpdate(projectToUpdate);
+        Project retrievedProject = dao.getById(1);
+        assertEquals(newProjectName, retrievedProject.getProject_name());
 
     }
 
     /**
-     * Insert.
+     * Insert. a new project
      */
     @Test
-    void insert() {
+    void insertSuccess() {
+        UserDao userDao = new UserDao();
+        User user = userDao.getById(1);
+        Project newProject = new Project(4, user, "rake the yard", "y", "y");
+        user.addProject(newProject);
 
-        // create new user
-        User newUser = new User(0,"Test user", "Test@email.com", "password", 20021);
-        dao.insert(newUser);
+        int id = dao.insert(newProject);
 
-        //we have no idea of insertions ID bc our sql clear script does not wipe the table....so we grab all books and enter in array
-        //original db had 3 entries.  now we should have 4 from insert
-        ArrayList<User> allUsers = new ArrayList<>();
-        allUsers = (ArrayList<User>) dao.getAll();
-        //call the 4th item in the array and see if its the new user
-        int usersSize = allUsers.size();
-        //figure out how many users on the users array, assign last user in db to variable
-        User lastUserInDb = allUsers.get(usersSize-1);
-        assertEquals(newUser, lastUserInDb);
+        assertNotEquals(0, id);
+        Project insertedProject = dao.getById(id);
+        assertEquals("rake the yard", insertedProject.getProject_name());
+        assertNotNull(insertedProject);
 
     }
-
     /**
-     * Verify successful insert of a user and an project
-     */
-    @Test
-    void insertWithProjectSuccess() {
-
-        // create new user
-        User newUser = new User(0,"Fred Flinstone", "Test@email.com", "password", 20021);
-        //dao.insert(newUser);
-
-        Project project = new Project(0,newUser,"Mow the lawn","n","y");
-
-        newUser.addProject(project);
-
-        int id = dao.insert(newUser);
-
-        assertNotEquals(0,id);
-        User insertedUser = dao.getById(id);
-        assertEquals("Fred Flinstone",insertedUser.getName());
-        assertEquals(1,insertedUser.getProjects().size());
-
-
-}
-
-
-
-    /**
-     * Delete.
+     * Deletes and indv project
      */
     @Test
     void delete() {
         //remove ID one and test
-        User user1 = dao.getById(1);
-        dao.delete(user1);
-        //get all the users from the table.  first user in this array should not match original book 1
-        ArrayList<User> allUsers = new ArrayList<>();
-        allUsers = (ArrayList<User>) dao.getAll();
-        assertNotEquals(user1, allUsers.get(0));
+        Project project1 = dao.getById(1);
+        dao.delete(project1);
+        //get all the projects from the table.  first project in this array should not match original book 1
+        ArrayList<Project> allProjects = new ArrayList<>();
+        allProjects = (ArrayList<Project>) dao.getAll();
+        assertNotEquals(project1, allProjects.get(0));
     }
 
     /**
@@ -133,12 +96,12 @@ class ProjectDaoTest {
      */
     @Test
     void getAll() {
-        //we know there are 3 users in the db from setup.  so we load all into an array and check length is 3
-        ArrayList<User> allUsers = new ArrayList<>();
-        allUsers = (ArrayList<User>) dao.getAll();
-        int totalBooks = allUsers.size();
+        //we know there are 3 projects in the db from setup.  so we load all into an array and check length is 3
+        ArrayList<Project> allProjects = new ArrayList<>();
+        allProjects = (ArrayList<Project>) dao.getAll();
+        int totalBooks = allProjects.size();
 
-        assertEquals(3,allUsers.size());
+        assertEquals(3, allProjects.size());
 
     }
 }

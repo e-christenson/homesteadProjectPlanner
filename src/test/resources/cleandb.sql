@@ -1,2 +1,4 @@
 delete from user;
+delete from projects;
 INSERT INTO `user` VALUES (1,'Bob Dedrich','bob@email.com','password1',53536),(2,'Bob Smith','bobsm@email.com','password2',90210),(3,'Ralph Zanderson','rz@email.com','password3',10011);
+INSERT INTO `projects` VALUES (1,1,"Mow the lawn","n","y"),(2,1,"Clean the gutters","n","y"),(3,2,"Take out trash","y","n");
