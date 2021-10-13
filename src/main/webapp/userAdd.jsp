@@ -16,7 +16,7 @@ new user sign up form
 
 <h2>New User signup</h2>
 
-      <form action="/java112/P4EmpAddAction" method="POST">
+      <form action="/homesteadProjectPlanner_war/HPPaddUser" method="POST">
 
       <label for="name">Please enter your name</label>
       <input type="text" name="name" id="name" required/><br />
@@ -36,7 +36,6 @@ new user sign up form
 
 
         <input type="submit" value="Submit">
-
 
 
       </form>
