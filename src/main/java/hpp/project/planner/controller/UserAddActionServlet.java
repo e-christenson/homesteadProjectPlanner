@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -57,13 +58,19 @@ public class UserAddActionServlet extends HttpServlet {
         UserDao dao = new UserDao();
         int id = dao.insert(newUserAdd);
 
-        request.setAttribute("users",dao.getAll());
+        List<User> users = dao.getAll();
+        request.setAttribute("users",users);
 
-        logger.info("%%% Added new user from WEBAPP, ID: "+id);
+        logger.info("DAO GETALL RETURNS===== "+dao.getAll());
 
 
         String url = "/displayAllUsers.jsp";
-        response.sendRedirect(request.getContextPath()+url);
+
+        //testing sc / el
+        request.setAttribute("url",url);
+        //response.sendRedirect(request.getContextPath()+url);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request,response);
 
     }
 
