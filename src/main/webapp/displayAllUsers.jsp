@@ -6,10 +6,18 @@ Author: Erik Christenson
 new user sign up form
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Lab 14.1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
 
 
 <body>
-<div id="container">
+<div class="container-fluid">
 
 <div id="main">
 
@@ -17,7 +25,7 @@ new user sign up form
 <h2>Table with all users </h2>
 
 
-    <table id="userTable" class="display" cellspacing="0" width="100%">
+    <table id="userTable" class="display border border-primary" cellspacing="0" width="100%">
         <thead>
         <th>ID</th>
         <th>Name</th>
@@ -44,14 +52,16 @@ new user sign up form
 
 </div>
 
-<c:forEach items="${users}" var="user">
-    ${user}<br>
 
-</c:forEach>
 
-<h1>  testing el </h1>
-<p>${url}</p>
+<h1>  Return to : </h1>
 
+<a href="/homesteadProjectPlanner_war/index.jsp">Homepage </a>
+<p>
+<a href="/homesteadProjectPlanner_war/userAdd.jsp">Add user form </a>
+</p>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>
 </html>
 
