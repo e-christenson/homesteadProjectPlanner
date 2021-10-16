@@ -16,7 +16,7 @@ new user sign up form
 
 <h2>New User signup</h2>
 
-      <form action="/homesteadProjectPlanner_war/HPPaddUser" method="POST">
+      <form action="HPPaddUser" method="POST">
 
       <label for="name">Please enter your name</label>
       <input type="text" name="name" id="name" required/><br />

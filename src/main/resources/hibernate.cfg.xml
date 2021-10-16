@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">aa1ax1zyy94yl3y.cnnb60f2vqgo.us-east-2.rds.amazonaws.com</property>
+        <property name="connection.url">jdbc:mysql://aa1ax1zyy94yl3y.cnnb60f2vqgo.us-east-2.rds.amazonaws.com:3306/HPP</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 
         <property name="connection.username">student</property>
