@@ -56,7 +56,7 @@ new user sign up form
 
 <h1>  Return to : </h1>
 
-<a href="index.jsp">Homepage </a>
+<a href="index_old.jsp">Homepage </a>
 <p>
 <a href="userAdd.jsp">Add user form </a>
 </p>

@@ -28,6 +28,8 @@
         <jersey-version>2.29.1</jersey-version>
         <jackson-version>2.10.0</jackson-version>
 
+
+
     </properties>
 
     <dependencies>
@@ -162,6 +164,24 @@
             <version>${jackson-version}</version>
         </dependency>
 
+        <!-- for parsing access token -->
+        <!-- TODO add versions to properties element rather than hard-coding -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20170516</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
 
 
 
