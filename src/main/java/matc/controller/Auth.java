@@ -6,7 +6,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import matc.auth.*;
 import matc.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
@@ -80,6 +79,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
         String userName = null;
+        String zipCode = null;
 
         if (authCode == null) {
             //TODO forward to an error page or back to the login
@@ -87,8 +87,14 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
+                logger.info("tokenResponse RAW : "+tokenResponse);
+
                 userName = validate(tokenResponse);
+
+                //zipCode = validate(tokenResponse);
+
                 req.setAttribute("userName", userName);
+                req.setAttribute("zipCode",zipCode);
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
                 //TODO forward to an error page
@@ -172,8 +178,9 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
+        String email = jwt.getClaim("email").asString();
         logger.debug("here's the username: " + userName);
-
+        logger.debug("here's the email: " +email);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
         // TODO decide what you want to do with the info!
