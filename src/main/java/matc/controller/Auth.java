@@ -6,6 +6,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hpp.project.planner.entity.User;
+import hpp.project.planner.persistence.UserDao;
 import matc.auth.*;
 import matc.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
@@ -36,6 +38,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -58,6 +61,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     String REGION;
     String POOL_ID;
     Keys jwks;
+    String address;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -79,7 +83,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
         String userName = null;
-        String zipCode = null;
+        //String address = null;
 
         if (authCode == null) {
             //TODO forward to an error page or back to the login
@@ -94,7 +98,15 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 //zipCode = validate(tokenResponse);
 
                 req.setAttribute("userName", userName);
-                req.setAttribute("zipCode",zipCode);
+                //req.setAttribute("address",address);
+
+                //check user name against DB
+                UserDao userdao = null;
+                List<User> allUsers = userdao.getAll();
+                boolean ans = allUsers.contains(userName);
+
+                //if (ans) {req.setAttribute(loginUser );}
+
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
                 //TODO forward to an error page
@@ -178,9 +190,10 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
-        String email = jwt.getClaim("email").asString();
+        address = jwt.getClaim("address").asString();
+
         logger.debug("here's the username: " + userName);
-        logger.debug("here's the email: " +email);
+        logger.debug("here's the address: " +address);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
         // TODO decide what you want to do with the info!

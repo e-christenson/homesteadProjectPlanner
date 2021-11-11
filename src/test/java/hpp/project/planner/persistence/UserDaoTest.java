@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The type Book dao test.
@@ -42,6 +42,21 @@ class UserDaoTest {
        assertEquals("bob@email.com", user1.getEmail());
        assertEquals("password1", user1.getPassword());
        assertEquals(53536, user1.getZip_code());
+
+    }
+
+
+    /**
+     * Gets by id sucess.
+     */
+    @Test
+    void getByNameSucess() {
+        User user1 = dao.getByUserName("Bob Dedrich");
+
+        assertEquals("Bob Dedrich", user1.getName());
+        assertEquals("bob@email.com", user1.getEmail());
+        assertEquals("password1", user1.getPassword());
+        assertEquals(53536, user1.getZip_code());
 
     }
 

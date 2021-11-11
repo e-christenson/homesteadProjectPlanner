@@ -33,6 +33,18 @@ public class UserDao {
         return user;
     }
 
+    public User getByUserName(String name) {
+        Session session = sessionFactory.openSession();
+
+        User user = session.get( User.class, name );
+        session.close();
+        logger.info("method***getByNAME returns***   :  " + user);
+        return user;
+    }
+
+
+
+
     /**
      * update book
      * @param user  Book to be inserted or updated
