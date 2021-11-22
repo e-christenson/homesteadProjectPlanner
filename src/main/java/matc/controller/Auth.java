@@ -189,13 +189,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String email = jwt.getClaim("email").asString();
        Map address = jwt.getClaim("address").asMap();
 
-        int zipCodeFromCog = getZipFromAddressMap(address);
+        //int zipCodeFromCog = getZipFromAddressMap(address);
 
 
         logger.debug("here's the username: " + userName);
         logger.debug("here's the address: " +address);
         logger.debug("here's the EMAIL: " +email);
-        logger.debug("here's the zip from the map: " +zipCodeFromCog);
+        //logger.debug("here's the zip from the map: " +zipCodeFromCog);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
         // TODO decide what you want to do with the info!
@@ -284,7 +284,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     }
 
 
-    private int getZipFromAddressMap(Map address){
+   /** private int getZipFromAddressMap(Map address){
 
 String addressString = String.valueOf(address);
         logger.info("processing zip code, string value: "+addressString);
@@ -296,7 +296,7 @@ logger.info("processing zip code, string after regex match: "+zi);
         return zip;
     }
 
-
+*/
 
 }
 
