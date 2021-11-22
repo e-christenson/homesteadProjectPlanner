@@ -48,7 +48,7 @@ class UserDaoTest {
 
     /**
      * Gets by id sucess.
-     */
+
     @Test
     void getByNameSucess() {
         User user1 = dao.getByUserName("Bob Dedrich");
@@ -59,6 +59,8 @@ class UserDaoTest {
         assertEquals(53536, user1.getZip_code());
 
     }
+     */
+
 
     /**
      * Save or update.
@@ -113,7 +115,7 @@ class UserDaoTest {
         User newUser = new User(0,"Fred Flinstone", "Test@email.com", "password", 20021);
         //dao.insert(newUser);
 
-        Project project = new Project(0,newUser,"Mow the lawn","n","y");
+        Project project = new Project(0,newUser,"Mow the lawn","n","y","n","y","n","n","y");
 
         newUser.addProject(project);
 

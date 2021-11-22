@@ -3,12 +3,12 @@
 <html>
 <body>
 <c:choose>
-    <c:when test="${empty userName}">
+    <c:when test="${empty cognitoUser}">
         <a href = "logIn">Log in</a>
     </c:when>
     <c:otherwise>
-        <h3>Welcome ${userName}</h3>
-        <h2>Your address is: ${address}</h2>
+        <h3>Welcome ${cognitoUser.name}</h3>
+        <h2>Your email is: ${cognitoUser.getEmail()}</h2>
     </c:otherwise>
 </c:choose>
 </body>

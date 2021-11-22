@@ -7,7 +7,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hpp.project.planner.entity.User;
-import hpp.project.planner.persistence.UserDao;
 import matc.auth.*;
 import matc.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
@@ -36,10 +35,7 @@ import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -61,7 +57,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     String REGION;
     String POOL_ID;
     Keys jwks;
-    String address;
+    User  cognitoUser = null;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -82,7 +78,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
-        String userName = null;
+
         //String address = null;
 
         if (authCode == null) {
@@ -93,17 +89,17 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 TokenResponse tokenResponse = getToken(authRequest);
                 logger.info("tokenResponse RAW : "+tokenResponse);
 
-                userName = validate(tokenResponse);
+                cognitoUser = validate(tokenResponse);
 
                 //zipCode = validate(tokenResponse);
 
-                req.setAttribute("userName", userName);
+                req.setAttribute("cognitoUser", cognitoUser);
                 //req.setAttribute("address",address);
 
                 //check user name against DB
-                UserDao userdao = null;
-                List<User> allUsers = userdao.getAll();
-                boolean ans = allUsers.contains(userName);
+                //UserDao userdao = null;
+                //List<User> allUsers = userdao.getAll();
+               // boolean ans = allUsers.contains(userName);
 
                 //if (ans) {req.setAttribute(loginUser );}
 
@@ -152,7 +148,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * @return
      * @throws IOException
      */
-    private String validate(TokenResponse tokenResponse) throws IOException {
+    private User validate(TokenResponse tokenResponse) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
 
@@ -190,16 +186,26 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         // Verify the token
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
-        address = jwt.getClaim("address").asString();
+        String email = jwt.getClaim("email").asString();
+       Map address = jwt.getClaim("address").asMap();
+
+        int zipCodeFromCog = getZipFromAddressMap(address);
+
 
         logger.debug("here's the username: " + userName);
         logger.debug("here's the address: " +address);
+        logger.debug("here's the EMAIL: " +email);
+        logger.debug("here's the zip from the map: " +zipCodeFromCog);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
         // TODO decide what you want to do with the info!
-        // for now, I'm just returning username for display back to the browser
+        // going to return as user object for now
+        cognitoUser = new User();
+    cognitoUser.setName(userName);
+        cognitoUser.setEmail(email);
 
-        return userName;
+
+        return cognitoUser;
     }
 
     /** Create the auth url and use it to build the request.
@@ -276,5 +282,21 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             logger.error("Error loading properties" + e.getMessage(), e);
         }
     }
+
+
+    private int getZipFromAddressMap(Map address){
+
+String addressString = String.valueOf(address);
+        logger.info("processing zip code, string value: "+addressString);
+
+String[] z = addressString.split("\\d{5}");
+String zi = String.valueOf(z);
+logger.info("processing zip code, string after regex match: "+zi);
+        int zip = Integer.parseInt(zi);
+        return zip;
+    }
+
+
+
 }
 

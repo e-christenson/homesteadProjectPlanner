@@ -66,7 +66,7 @@ class ProjectDaoTest {
     void insertSuccess() {
         UserDao userDao = new UserDao();
         User user = userDao.getById(1);
-        Project newProject = new Project(4, user, "rake the yard", "y", "y");
+        Project newProject = new Project(4, user, "rake the yard",  "y", "y", "y", "y", "y", "y", "y");
         user.addProject(newProject);
 
         int id = dao.insert(newProject);

@@ -33,16 +33,16 @@ public class UserDao {
         return user;
     }
 
-    public User getByUserName(String name) {
+   /** public User getByUserName(String name) {
         Session session = sessionFactory.openSession();
-
+logger.info("looking for this name in getByUSerNAme: "+name);
         User user = session.get( User.class, name );
         session.close();
         logger.info("method***getByNAME returns***   :  " + user);
         return user;
     }
 
-
+*/
 
 
     /**
