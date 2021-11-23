@@ -6,7 +6,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.User;
+import hpp.project.planner.persistence.GenericDao;
 import matc.auth.*;
 import matc.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
@@ -94,14 +96,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 //zipCode = validate(tokenResponse);
 
                 req.setAttribute("cognitoUser", cognitoUser);
-                //req.setAttribute("address",address);
 
-                //check user name against DB
-                //UserDao userdao = null;
-                //List<User> allUsers = userdao.getAll();
-               // boolean ans = allUsers.contains(userName);
 
-                //if (ans) {req.setAttribute(loginUser );}
+
+                //pull all projects with their ID and set into sc
+                List<Project> projects = getProjectsById(cognitoUser.getId());
+                req.setAttribute("projects", projects);
+
 
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
@@ -187,13 +188,14 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
         String email = jwt.getClaim("email").asString();
-       Map address = jwt.getClaim("address").asMap();
+       //Map address = jwt.getClaim("address").asMap();
+
 
         //int zipCodeFromCog = getZipFromAddressMap(address);
 
 
         logger.debug("here's the username: " + userName);
-        logger.debug("here's the address: " +address);
+        //logger.debug("here's the address: " +address);
         logger.debug("here's the EMAIL: " +email);
         //logger.debug("here's the zip from the map: " +zipCodeFromCog);
         logger.debug("here are all the available claims: " + jwt.getClaims());
@@ -203,6 +205,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         cognitoUser = new User();
     cognitoUser.setName(userName);
         cognitoUser.setEmail(email);
+        cognitoUser.setId(getIdOfCognitoUser(cognitoUser));
 
 
         return cognitoUser;
@@ -297,6 +300,21 @@ logger.info("processing zip code, string after regex match: "+zi);
     }
 
 */
+
+   private int getIdOfCognitoUser(User signedInCognitoUser){
+       GenericDao dao = new GenericDao(User.class);
+    List<User> users =dao.findByPropertyEqual("email",signedInCognitoUser.getEmail());
+
+       return users.get(0).getId();
+   }
+
+    private List<Project> getProjectsById(int idNum){
+        GenericDao dao = new GenericDao(Project.class);
+        List<Project> projects =dao.findByPropertyEqual("user",idNum);
+
+        return projects;
+    }
+
 
 }
 

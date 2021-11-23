@@ -40,6 +40,19 @@ class UserTest {
      * Gets all.
      */
     @Test
+    void getUserIdByEmail() {
+        //we know there are 3 users in the db from setup.  so we load all into an array and check length is 3
+        users = dao.findByPropertyEqual("email","bob@email.com");
+        int id = users.get(0).getId();
+
+        assertEquals(1,id);
+
+    }
+
+    /**
+     * Gets all.
+     */
+    @Test
     void getAll() {
         //we know there are 3 users in the db from setup.  so we load all into an array and check length is 3
         users = dao.getAll();
@@ -48,4 +61,6 @@ class UserTest {
         assertEquals(3,totalUsers);
 
     }
+
+
 }
