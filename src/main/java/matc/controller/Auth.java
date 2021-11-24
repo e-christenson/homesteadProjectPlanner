@@ -80,6 +80,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
+        String url = "index.jsp";
 
         //String address = null;
 
@@ -97,6 +98,13 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 req.setAttribute("cognitoUser", cognitoUser);
 
+                //if this is a new user that just signed in, redirect them to user signup
+                //to gather all details of user in our db
+
+                if (cognitoUser.getId() == -1){
+                    url = "userAdd.jsp";
+                    //add user to DB and make userAdd jsp have logic to now modify a user
+                }
 
 
                 //pull all projects with their ID and set into sc
@@ -112,7 +120,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 //TODO forward to an error page
             }
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
 
     }
@@ -305,8 +313,18 @@ logger.info("processing zip code, string after regex match: "+zi);
        GenericDao dao = new GenericDao(User.class);
     List<User> users =dao.findByPropertyEqual("email",signedInCognitoUser.getEmail());
 
-       return users.get(0).getId();
-   }
+    //a new user will have a null return on this call, we assign them -1 ID
+       //and use that later to prompt new user entry into db
+       int userID;
+
+       if (users.size() > 0){
+
+           userID = users.get(0).getId();
+           } else {
+           userID = -1;
+           }
+        return userID;
+       }
 
     private List<Project> getProjectsById(int idNum){
         GenericDao dao = new GenericDao(Project.class);
