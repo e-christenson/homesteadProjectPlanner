@@ -1,0 +1,63 @@
+package hpp.project.planner.persistence;
+
+import hpp.project.planner.entity.Project;
+import hpp.project.planner.entity.User;
+import hpp.project.planner.test.util.Database;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * The type Book dao test.
+ */
+
+class ProjectTest {
+    /**
+     * The Dao.
+     */
+    GenericDao dao;
+    List<Project> projects;
+
+    /**
+     * Sets up.
+     */
+    @BeforeEach
+    void setUp() {
+        dao = new GenericDao(Project.class);
+        Database database = Database.getInstance();
+        database.runSQL("cleandb.sql");
+    }
+
+
+    /**
+     * Gets all.
+     */
+    @Test
+    void getAll() {
+        //we know there are 3 projects in the db from setup.  so we load all into an array and check length is 3
+   projects = dao.getAll();
+        int totalProjects = projects.size();
+
+        assertEquals(3, totalProjects);
+
+    }
+
+    /**
+     * Gets all projects for an indvidual user.
+     */
+    @Test
+    void getAllForUser() {
+        //we know there are 3 projects in the db from setup.  so we load all into an array and check length is 3
+        projects = dao.findByPropertyEqual("user",1);
+        int totalProjects = projects.size();
+
+        assertEquals(2, totalProjects);
+
+    }
+
+
+}
