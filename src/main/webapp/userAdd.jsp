@@ -12,14 +12,15 @@ new user sign up form
 <div id="container">
 
 <div id="main">
+    <h3>Welcome ${cognitoUser.name}</h3>
+    <h2>Your email is: ${cognitoUser.getEmail()}</h2>
 
-
-<h2>New User signup</h2>
+<h2>Welcome -- This is your first log in,  lets update a few things</h2>
 
       <form action="HPPaddUser" method="POST">
 
-      <label for="name">Please enter your name</label>
-      <input type="text" name="name" id="name" required/><br />
+
+      <input type="hidden" name="name" id="name" value="${cognitoUser.name}"/><br />
 
 
 

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -96,14 +97,17 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 //zipCode = validate(tokenResponse);
 
-                req.setAttribute("cognitoUser", cognitoUser);
+                //req.setAttribute("cognitoUser", cognitoUser);
+
+                ServletContext sc = getServletContext();
+                sc.setAttribute("cognitoUser", cognitoUser);
 
                 //if this is a new user that just signed in, redirect them to user signup
                 //to gather all details of user in our db
 
                 if (cognitoUser.getId() == -1){
                     url = "userAdd.jsp";
-                    //add user to DB and make userAdd jsp have logic to now modify a user
+                    //TODO add user to DB and make userAdd jsp have logic to now modify a user
                 }
 
 

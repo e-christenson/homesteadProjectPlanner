@@ -20,7 +20,8 @@ new user sign up form
 <div class="container-fluid">
 
 <div id="main">
-
+    <h3>Welcome ${cognitoUser.name}</h3>
+    <h2>Your email is: ${cognitoUser.getEmail()}</h2>
 
 <h2>Table with all users </h2>
 
@@ -56,7 +57,7 @@ new user sign up form
 
 <h1>  Return to : </h1>
 
-<a href="index_old.jsp">Homepage </a>
+<a href="index.jsp">Homepage </a>
 <p>
 <a href="userAdd.jsp">Add user form </a>
 </p>
