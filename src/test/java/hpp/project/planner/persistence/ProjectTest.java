@@ -20,7 +20,9 @@ class ProjectTest {
      * The Dao.
      */
     GenericDao dao;
+    GenericDao userDao;
     List<Project> projects;
+    List<User> users;
 
     /**
      * Sets up.
@@ -28,10 +30,11 @@ class ProjectTest {
     @BeforeEach
     void setUp() {
         dao = new GenericDao(Project.class);
+        userDao = new GenericDao(User.class);
+
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }
-
 
     /**
      * Gets all.
@@ -43,7 +46,6 @@ class ProjectTest {
         int totalProjects = projects.size();
 
         assertEquals(3, totalProjects);
-
     }
 
     /**
@@ -56,6 +58,22 @@ class ProjectTest {
         int totalProjects = projects.size();
 
         assertEquals(2, totalProjects);
+    }
+
+    /**
+     * Gets all projects for an indvidual user.
+     */
+    @Test
+    void insertNewProject() {
+
+        users = userDao.findByPropertyEqual("email","bob@email.com");
+        Project newProject = new Project( 5, users.get(0), "burn the brush pile",  "y", "y", "y", "y", "y", "y", "y");
+    users.get(0).addProject(newProject);
+    int id = dao.insert(newProject);
+    Project projectWeJustAdded = (Project) dao.getById(id);
+
+
+        assertEquals(projectWeJustAdded.getProject_name(),newProject.getProject_name());
 
     }
 

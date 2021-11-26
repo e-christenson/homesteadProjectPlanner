@@ -1,5 +1,7 @@
 package hpp.project.planner.entity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +17,8 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -29,6 +33,7 @@ public class User {
 
 
     private Set<Project> Projects = new HashSet<>();
+
 
 
    public User() {
