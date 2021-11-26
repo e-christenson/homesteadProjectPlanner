@@ -67,12 +67,13 @@ class ProjectTest {
     void insertNewProject() {
 
         users = userDao.findByPropertyEqual("email","bob@email.com");
-        Project newProject = new Project( 5, users.get(0), "rake the yard",  "y", "y", "y", "y", "y", "y", "y");
+        Project newProject = new Project( 5, users.get(0), "burn the brush pile",  "y", "y", "y", "y", "y", "y", "y");
     users.get(0).addProject(newProject);
     int id = dao.insert(newProject);
+    Project projectWeJustAdded = (Project) dao.getById(id);
 
 
-        assertEquals(2, id);
+        assertEquals(projectWeJustAdded.getProject_name(),newProject.getProject_name());
 
     }
 
