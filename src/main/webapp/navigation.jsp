@@ -14,5 +14,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="contactUs.html">Contact Us</a></li>
             </ul>
+        </div>
     </nav>
 </row>
