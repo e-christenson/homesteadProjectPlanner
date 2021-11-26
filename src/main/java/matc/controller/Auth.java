@@ -113,7 +113,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 //pull all projects with their ID and set into sc
                 List<Project> projects = getProjectsById(cognitoUser.getId());
-                req.setAttribute("projects", projects);
+                sc.setAttribute("projects", projects);
 
 
             } catch (IOException e) {
