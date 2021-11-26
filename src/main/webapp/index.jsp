@@ -2,6 +2,13 @@
 <%@include file="taglib.jsp"%>
 <html>
 <body>
+<main class="container bg-light">
+    <%@include file="header.jsp"%>
+        <%@include file="navigation.jsp"%>
+    <main>
+
+        <div class="row">
+            <article class="col-md-9 text-center">
 <c:choose>
     <c:when test="${empty cognitoUser}">
         <a href = "logIn">Log in</a>
@@ -29,6 +36,9 @@
             </c:forEach>
             </tbody>
         </table>
+        </div>
+        </article>
+
         <a href = "welcome.jsp">HOME</a>
         <a href = "displayAllUsers.jsp">all user (testing)</a>
 
@@ -37,5 +47,6 @@
 
     </c:otherwise>
 </c:choose>
+</main>
 </body>
 </html>
