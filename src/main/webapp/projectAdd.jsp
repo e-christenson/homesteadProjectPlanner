@@ -28,7 +28,8 @@ new project form
             <input type="text" name="projectName" id="projectName"/><br />
 
 
-            <label class="container"> this is a weekday project
+            <label class="container"> this is a weekday project <br />
+
                 <input type="radio" checked="checked" name="day" value="mf">
                 <span class="checkmark"></span>
             </label>
