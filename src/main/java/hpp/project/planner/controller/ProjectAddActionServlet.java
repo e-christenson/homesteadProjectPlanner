@@ -58,11 +58,14 @@ public class ProjectAddActionServlet extends HttpServlet {
         String  projectName = request.getParameter("projectName");
         String  day = request.getParameter("day");
 
-        logger.info("$$$$ form hidden value pass over $$$"+email);
+
         userDao = new GenericDao(User.class);
+        dao = new GenericDao(Project.class);
+
         users = userDao.findByPropertyEqual("email",email);
         Project newProject = new Project( 0, users.get(0), projectName,  day, day, "n", "n", "n", "n", "n");
         users.get(0).addProject(newProject);
+        logger.info("is newProject set???  "+newProject);
         dao.insert(newProject);
 
         logger.info("projectAddServlet FROM DATA incoming: "+projectName +" "+day);
