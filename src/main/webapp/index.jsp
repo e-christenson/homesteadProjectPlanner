@@ -11,7 +11,7 @@
             <article class="col-md-9 text-center">
 <c:choose>
     <c:when test="${empty cognitoUser}">
-        <a href = "logIn">Log in</a>
+       <h2> <a href = "logIn">Please Log in</a> </h2>
     </c:when>
     <c:otherwise>
         <h3>Welcome ${cognitoUser.name}</h3>
