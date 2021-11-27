@@ -1,17 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--
-Author: Erik Christenson
-new project form
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-
+<%@include file="head.jsp"%>
+<%@include file="taglib.jsp"%>
+<html>
 <body>
+<main class="container bg-light">
+    <%@include file="header.jsp"%>
+    <%@include file="navigation.jsp"%>
+
 <div id="container">
 
-    <div id="main">
+    <div id="main" class="row">
         <h3>Welcome ${cognitoUser.name}</h3>
 
 
@@ -19,14 +16,10 @@ new project form
 
         <form action="HPPaddProject" method="POST">
 
-
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
-
-
 
             <label for="projectName">Project Name</label>
             <input type="text" name="projectName" id="projectName"/><br />
-
 
             <label class="container"> this is a weekday project <br />
 
@@ -41,8 +34,6 @@ new project form
                 <input type="radio" name="day" value="all">
                 <span class="checkmark"></span>
             </label>
-
-
 
 
             <input type="submit" value="Submit">
