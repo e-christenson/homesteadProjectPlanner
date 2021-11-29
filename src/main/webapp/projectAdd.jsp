@@ -9,7 +9,7 @@
 <div id="container">
 
     <div id="main" class="row">
-        <h3>Welcome ${cognitoUser.name}</h3>
+        <h3>Welcome ${cognitoUser.name}</h3><br>
 
 
         <h2>Add New Project </h2>
