@@ -4,21 +4,17 @@ package hpp.project.planner.controller;
 import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
-import hpp.project.planner.persistence.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 /**
  *  Homestead Project Planer
@@ -26,10 +22,10 @@ import java.util.Properties;
  *@author    EChristenson
  */
 @WebServlet(
-        name = "HPPaddProject",
-        urlPatterns = { "/HPPaddProject" }
+        name = "HPPdeleteProject",
+        urlPatterns = { "/HPPdeleteProject" }
 )
-public class ProjectAddActionServlet extends HttpServlet {
+public class ProjectDeleteActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     GenericDao dao;
@@ -58,7 +54,7 @@ public class ProjectAddActionServlet extends HttpServlet {
 
 
 
-        String  projectName = request.getParameter("projectName");
+        String  projectId = request.getParameter("projectId");
         String  day = request.getParameter("day");
 //TODO add logic here
         day = "y";
@@ -66,15 +62,14 @@ public class ProjectAddActionServlet extends HttpServlet {
         userDao = new GenericDao(User.class);
         dao = new GenericDao(Project.class);
 
+        //users = userDao.findByPropertyEqual("email",email);
         users = userDao.findByPropertyEqual("email",email);
-        Project newProject = new Project( 0, users.get(0), projectName,  day, day, "n", "n", "n", "n", "n");
-        users.get(0).addProject(newProject);
-        logger.info("is newProject set???  "+newProject);
-        dao.insert(newProject);
 
-        logger.info("projectAddServlet FROM DATA incoming: "+projectName +" "+day);
+projects = dao.findByPropertyEqual("id",projectId);
 
-projects = dao.findByPropertyEqual("user",users.get(0).getId());
+dao.delete(projects.get(0));
+
+projects = dao.findByPropertyEqual("user", users.get(0));
 
         //ServletContext sc = getServletContext();
         //sc.setAttribute("projects",projects);

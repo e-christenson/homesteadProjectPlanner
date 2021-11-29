@@ -10,7 +10,7 @@
                     <a class="nav-link" href="projectAdd.jsp">Add Project<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link" href="aboutUs.html">My Helpers</a></li>
+                    <a  class="nav-link" href="deleteProject.jsp">Delete Project</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="contactUs.html">Store List</a></li>
             </ul>
