@@ -61,7 +61,8 @@ public class ProjectAddActionServlet extends HttpServlet {
         String  projectName = request.getParameter("projectName");
         String  day = request.getParameter("day");
 //TODO add logic here
-        day = "y";
+        //day = "y";
+
 
         userDao = new GenericDao(User.class);
         dao = new GenericDao(Project.class);

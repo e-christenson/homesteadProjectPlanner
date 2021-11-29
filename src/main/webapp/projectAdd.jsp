@@ -9,32 +9,35 @@
 <div id="container">
 
     <div id="main" class="row">
-        <h3>Welcome ${cognitoUser.name}</h3><br>
+        <h2>Add Project page for ${cognitoUser.name}</h2><br>
 
 
-        <h2>Add New Project </h2>
 
-        <form action="HPPaddProject" method="POST">
+
+        <form action="HPPaddProject" method="POST" class="border">
 
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
 
             <label for="projectName">Project Name</label>
             <input type="text" name="projectName" id="projectName"/><br />
 
-            <label class="container"> this is a weekday project <br />
 
-                <input type="radio" checked="checked" name="day" value="mf">
-                <span class="checkmark"></span>
-            </label>
-            <label class="container">This is a weekend project
-                <input type="radio" name="day" value="ss">
-                <span class="checkmark"></span>
-            </label>
-            <label class="container">This is a any day project
-                <input type="radio" name="day" value="all">
-                <span class="checkmark"></span>
-            </label>
 
+            <fieldset class="border border-dark rounded">
+                <h3>Project Details </h3>
+
+                <div class="form-group">
+                    <input type="radio" value="m" id="weekDay" name="day"  >
+                    <label for="weekDay">Weekday Project</label>
+
+                    <input type="radio" value="s" id="weekend"  name="day" >
+                    <label for="Weekend">Weekend Project</label>
+
+                    <input type="radio" value="b" id="both"  name="day">
+                    <label for="both">Any Day Project</label>
+                </div>
+
+            </fieldset>
 
             <input type="submit" value="Submit">
 
