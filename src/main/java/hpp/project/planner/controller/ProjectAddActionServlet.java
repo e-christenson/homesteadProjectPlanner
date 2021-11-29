@@ -55,6 +55,9 @@ public class ProjectAddActionServlet extends HttpServlet {
 
         //info in from web form
         String email = request.getParameter("email");
+
+
+
         String  projectName = request.getParameter("projectName");
         String  day = request.getParameter("day");
 //TODO add logic here
@@ -72,8 +75,12 @@ public class ProjectAddActionServlet extends HttpServlet {
         logger.info("projectAddServlet FROM DATA incoming: "+projectName +" "+day);
 
 projects = dao.findByPropertyEqual("user",users.get(0).getId());
-        ServletContext sc = getServletContext();
-        sc.setAttribute("projects",projects);
+
+        //ServletContext sc = getServletContext();
+        //sc.setAttribute("projects",projects);
+
+        request.setAttribute("projects",projects);
+
 
         String url = "/index.jsp";
 

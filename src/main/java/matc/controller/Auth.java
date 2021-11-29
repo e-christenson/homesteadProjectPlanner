@@ -97,10 +97,12 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 //zipCode = validate(tokenResponse);
 
-                //req.setAttribute("cognitoUser", cognitoUser);
+                req.getSession().setAttribute("cognitoUser", cognitoUser);
 
-                ServletContext sc = getServletContext();
-                sc.setAttribute("cognitoUser", cognitoUser);
+
+//setting in SC VS the request - this makes any browser join the same session
+                //ServletContext sc = getServletContext();
+                //sc.setAttribute("cognitoUser", cognitoUser);
 
                 //if this is a new user that just signed in, redirect them to user signup
                 //to gather all details of user in our db
@@ -113,7 +115,12 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 //pull all projects with their ID and set into sc
                 List<Project> projects = getProjectsById(cognitoUser.getId());
-                sc.setAttribute("projects", projects);
+
+                req.setAttribute("projects", projects);
+
+
+                //setting projects in SC = anyone can join session once logged in
+                //sc.setAttribute("projects", projects);
 
 
             } catch (IOException e) {
