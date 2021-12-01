@@ -5,7 +5,7 @@
 <main class="container bg-light">
     <%@include file="header.jsp"%>
         <%@include file="navigation.jsp"%>
-    <main>
+
 
         <div class="row">
             <article class="col-md-9 text-center">
@@ -14,21 +14,25 @@
        <h2> <a href = "logIn">Please Log in</a> </h2>
     </c:when>
     <c:otherwise>
-        <h3>Welcome ${cognitoUser.name}</h3>
-        <h2>Your email is: ${cognitoUser.getEmail()}</h2>
+        <h2>Welcome ${cognitoUser.name}</h2>
+
         <h3>Total Projects: ${projects.size()}</h3>
 
-        <table id="userTable" class="display border border-primary" cellspacing="0" width="100%">
-            <thead>
-            <th>ID</th>
+        <table id="userTable" class="table ">
+            <thead class="thead-dark">
+
             <th>Name</th>
+            <th>Helper</th>
+            <th>Actions</th>
 
             </thead>
             <tbody>
             <c:forEach var="project" items="${projects}">
                 <tr>
-                    <td>${project.getId()} </td>
+
                     <td>${project.getProject_name()} </td>
+                    <td>${project.getHelper()} </td>
+                    <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
 
 
                 </tr>
@@ -39,8 +43,7 @@
         </div>
         </article>
 
-        <a href = "welcome.jsp">HOME</a>
-        <a href = "displayAllUsers.jsp">all user (testing)</a>
+
 
 
 
