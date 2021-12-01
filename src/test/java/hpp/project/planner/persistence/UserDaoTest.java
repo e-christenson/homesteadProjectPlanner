@@ -40,7 +40,7 @@ class UserDaoTest {
 
        assertEquals("Bob Dedrich", user1.getName());
        assertEquals("bob@email.com", user1.getEmail());
-       assertEquals("password1", user1.getLonLat());
+       assertEquals("lon=-89.224&lat=42.929", user1.getLonLat());
        assertEquals(53536, user1.getZip_code());
 
     }
@@ -78,7 +78,7 @@ class UserDaoTest {
         assertEquals("Not Bob", user1.getName());
         //check other known variables to make sure they didn't change
         assertEquals("bob@email.com", user1.getEmail());
-        assertEquals("password1", user1.getLonLat());
+        assertEquals("lon=-89.224&lat=42.929", user1.getLonLat());
         assertEquals(53536, user1.getZip_code());
 
     }
