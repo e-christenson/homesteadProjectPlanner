@@ -42,6 +42,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Auth.
+ */
 @WebServlet(
         urlPatterns = {"/auth"}
 )
@@ -51,16 +54,46 @@ import java.util.stream.Collectors;
  */
 
 public class Auth extends HttpServlet implements PropertiesLoader {
+    /**
+     * The Properties.
+     */
     Properties properties;
+    /**
+     * The Client id.
+     */
     String CLIENT_ID;
+    /**
+     * The Client secret.
+     */
     String CLIENT_SECRET;
+    /**
+     * The Oauth url.
+     */
     String OAUTH_URL;
+    /**
+     * The Login url.
+     */
     String LOGIN_URL;
+    /**
+     * The Redirect url.
+     */
     String REDIRECT_URL;
+    /**
+     * The Region.
+     */
     String REGION;
+    /**
+     * The Pool id.
+     */
     String POOL_ID;
+    /**
+     * The Jwks.
+     */
     Keys jwks;
-    User  cognitoUser = null;
+    /**
+     * The Cognito user.
+     */
+    User cognitoUser = null;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -73,7 +106,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
     /**
      * Gets the auth code from the request and exchanges it for a token containing user info.
-     * @param req servlet request
+     *
+     * @param req  servlet request
      * @param resp servlet response
      * @throws ServletException
      * @throws IOException
@@ -83,45 +117,28 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String authCode = req.getParameter("code");
         String url = "index.jsp";
 
-        //String address = null;
-
         if (authCode == null) {
             //TODO forward to an error page or back to the login
         } else {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
                 TokenResponse tokenResponse = getToken(authRequest);
-                logger.info("tokenResponse RAW : "+tokenResponse);
-
+                logger.info("tokenResponse RAW : " + tokenResponse);
                 cognitoUser = validate(tokenResponse);
-
-                //zipCode = validate(tokenResponse);
-
                 req.getSession().setAttribute("cognitoUser", cognitoUser);
-
-
-//setting in SC VS the request - this makes any browser join the same session
-                //ServletContext sc = getServletContext();
-                //sc.setAttribute("cognitoUser", cognitoUser);
 
                 //if this is a new user that just signed in, redirect them to user signup
                 //to gather all details of user in our db
 
-                if (cognitoUser.getId() == -1){
+                if (cognitoUser.getId() == -1) {
                     url = "userAdd.jsp";
                     //TODO add user to DB and make userAdd jsp have logic to now modify a user
                 }
 
-
-                //pull all projects with their ID and set into sc
+                //pull all projects with their ID and set into session
                 List<Project> projects = getProjectsById(cognitoUser.getId());
 
                 req.getSession().setAttribute("projects", projects);
-
-
-                //setting projects in SC = anyone can join session once logged in
-                //sc.setAttribute("projects", projects);
-
 
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
@@ -138,6 +155,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
     /**
      * Sends the request for a token to Cognito and maps the response
+     *
      * @param authRequest the request to the oauth2/token url in cognito
      * @return response from the oauth2/token endpoint which should include id token, access token and refresh token
      * @throws IOException
@@ -164,6 +182,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     /**
      * Get values out of the header to verify the token is legit. If it is legit, get the claims from it, such
      * as username.
+     *
      * @param tokenResponse
      * @return
      * @throws IOException
@@ -207,22 +226,18 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
         String email = jwt.getClaim("email").asString();
-       //Map address = jwt.getClaim("address").asMap();
-
-
-        //int zipCodeFromCog = getZipFromAddressMap(address);
 
 
         logger.debug("here's the username: " + userName);
         //logger.debug("here's the address: " +address);
-        logger.debug("here's the EMAIL: " +email);
+        logger.debug("here's the EMAIL: " + email);
         //logger.debug("here's the zip from the map: " +zipCodeFromCog);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
         // TODO decide what you want to do with the info!
         // going to return as user object for now
         cognitoUser = new User();
-    cognitoUser.setName(userName);
+        cognitoUser.setName(userName);
         cognitoUser.setEmail(email);
         cognitoUser.setId(getIdOfCognitoUser(cognitoUser));
 
@@ -230,7 +245,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         return cognitoUser;
     }
 
-    /** Create the auth url and use it to build the request.
+    /**
+     * Create the auth url and use it to build the request.
      *
      * @param authCode auth code received from Cognito as part of the login process
      * @return the constructed oauth request
@@ -260,7 +276,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     /**
      * Gets the JSON Web Key Set (JWKS) for the user pool from cognito and loads it
      * into objects for easier use.
-     *
+     * <p>
      * JSON Web Key Set (JWKS) location: https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
      * Demo url: https://cognito-idp.us-east-2.amazonaws.com/us-east-2_XaRYHsmKB/.well-known/jwks.json
      *
@@ -306,40 +322,41 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     }
 
 
-   /** private int getZipFromAddressMap(Map address){
+    /**
+     * private int getZipFromAddressMap(Map address){
+     * <p>
+     * String addressString = String.valueOf(address);
+     * logger.info("processing zip code, string value: "+addressString);
+     * <p>
+     * String[] z = addressString.split("\\d{5}");
+     * String zi = String.valueOf(z);
+     * logger.info("processing zip code, string after regex match: "+zi);
+     * int zip = Integer.parseInt(zi);
+     * return zip;
+     * }
+     */
 
-String addressString = String.valueOf(address);
-        logger.info("processing zip code, string value: "+addressString);
+    private int getIdOfCognitoUser(User signedInCognitoUser) {
+        GenericDao dao = new GenericDao(User.class);
+        List<User> users = dao.findByPropertyEqual("email", signedInCognitoUser.getEmail());
 
-String[] z = addressString.split("\\d{5}");
-String zi = String.valueOf(z);
-logger.info("processing zip code, string after regex match: "+zi);
-        int zip = Integer.parseInt(zi);
-        return zip;
+        //a new user will have a null return on this call, we assign them -1 ID
+        //and use that later to prompt new user entry into db
+        int userID;
+
+        if (users.size() > 0) {
+
+            userID = users.get(0).getId();
+        } else {
+            userID = -1;
+        }
+        return userID;
     }
 
-*/
 
-   private int getIdOfCognitoUser(User signedInCognitoUser){
-       GenericDao dao = new GenericDao(User.class);
-    List<User> users =dao.findByPropertyEqual("email",signedInCognitoUser.getEmail());
-
-    //a new user will have a null return on this call, we assign them -1 ID
-       //and use that later to prompt new user entry into db
-       int userID;
-
-       if (users.size() > 0){
-
-           userID = users.get(0).getId();
-           } else {
-           userID = -1;
-           }
-        return userID;
-       }
-
-    private List<Project> getProjectsById(int idNum){
+    private List<Project> getProjectsById(int idNum) {
         GenericDao dao = new GenericDao(Project.class);
-        List<Project> projects =dao.findByPropertyEqual("user",idNum);
+        List<Project> projects = dao.findByPropertyEqual("user", idNum);
 
         return projects;
     }
