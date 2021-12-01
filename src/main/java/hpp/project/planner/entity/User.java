@@ -1,7 +1,5 @@
 package hpp.project.planner.entity;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,7 +24,7 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private String password;
+    private String lonLat;
     private int zip_code;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -39,11 +37,11 @@ public class User {
    public User() {
     }
 
-    public User(int id,String name, String email, String password, int zip_code) {
+    public User(int id, String name, String email, String lonLat, int zip_code) {
        this.id = id;
        this.name = name;
         this.email = email;
-        this.password = password;
+        this.lonLat = lonLat;
         this.zip_code = zip_code;
     }
 
@@ -75,12 +73,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLonLat() {
+        return lonLat;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLonLat(String password) {
+        this.lonLat = password;
     }
 
     public int getZip_code() {
@@ -115,7 +113,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + lonLat + '\'' +
                 ", zip_code=" + zip_code +
                 '}';
     }
@@ -125,12 +123,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && zip_code == user.zip_code && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+        return id == user.id && zip_code == user.zip_code && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(lonLat, user.lonLat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password, zip_code);
+        return Objects.hash(id, name, email, lonLat, zip_code);
     }
 
 

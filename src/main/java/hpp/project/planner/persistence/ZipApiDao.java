@@ -31,7 +31,7 @@ public class ZipApiDao {
 
         ZipCode zipcode = mapper.readValue(response, ZipCode.class);
         cityName = zipcode.getPlaces().get(0).getPlaceName();
-        LongLatt = (zipcode.getPlaces().get(0).getLongitude()+" , "+zipcode.getPlaces().get(0).getLatitude());
+        LongLatt = ("lon="+zipcode.getPlaces().get(0).getLongitude()+"&lat="+zipcode.getPlaces().get(0).getLatitude());
 
     }
 
