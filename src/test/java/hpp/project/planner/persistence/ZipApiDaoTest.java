@@ -14,7 +14,7 @@ public class ZipApiDaoTest {
         String longLatt = zipApiDao.getLongLatt();
 
         assertEquals("Stoughton",cityFromApi);
-        assertEquals("-89.224 , 42.929",longLatt);
+        assertEquals("lon=-89.224&lat=42.929",longLatt);
 
         //assertEquals("???", response);
     }
