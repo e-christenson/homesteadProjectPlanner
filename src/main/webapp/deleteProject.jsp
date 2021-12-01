@@ -5,7 +5,7 @@
 <main class="container bg-light">
     <%@include file="header.jsp"%>
         <%@include file="navigation.jsp"%>
-
+    <main>
 
         <div class="row">
             <article class="col-md-9 text-center">
@@ -14,25 +14,21 @@
        <h2> <a href = "logIn">Please Log in</a> </h2>
     </c:when>
     <c:otherwise>
-        <h2>Welcome ${cognitoUser.name}</h2>
+        <h3>Welcome ${cognitoUser.name}</h3>
 
         <h3>Total Projects: ${projects.size()}</h3>
 
-        <table id="userTable" class="table ">
-            <thead class="thead-dark">
-
+        <table id="userTable" class="display border border-primary" cellspacing="0" width="100%">
+            <thead>
+            <th>ID</th>
             <th>Name</th>
-            <th>Helper</th>
-            <th>Actions</th>
 
             </thead>
             <tbody>
             <c:forEach var="project" items="${projects}">
                 <tr>
-
+                    <td>${project.getId()} </td>
                     <td>${project.getProject_name()} </td>
-                    <td>${project.getHelper()} </td>
-                    <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
 
 
                 </tr>
@@ -43,7 +39,18 @@
         </div>
         </article>
 
+        <h2>Please select a project to delete </h2>
 
+        <form action="HPPdeleteProject" method="POST">
+
+            <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
+
+            <label for="projectId">Project ID to delete </label>
+            <input type="text" name="projectId" id="projectId"/><br />
+            <input type="submit" value="Submit">
+
+
+        </form>
 
 
 

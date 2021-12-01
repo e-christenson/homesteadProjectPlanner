@@ -116,7 +116,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 //pull all projects with their ID and set into sc
                 List<Project> projects = getProjectsById(cognitoUser.getId());
 
-                req.setAttribute("projects", projects);
+                req.getSession().setAttribute("projects", projects);
 
 
                 //setting projects in SC = anyone can join session once logged in
