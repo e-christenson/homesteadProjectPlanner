@@ -64,7 +64,7 @@ public class UserAddActionServlet extends HttpServlet {
         logger.info("DAO GETALL RETURNS===== "+dao.getAll());
 
 
-        String url = "/displayAllUsers.jsp";
+        String url = "/index.jsp";
 
         //testing sc / el
         request.setAttribute("url",url);
