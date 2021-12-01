@@ -46,22 +46,22 @@ public class UserAddActionServlet extends HttpServlet {
 
     public void doPost (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String longLat = " ";
 
         //info in from web form
         String  name = request.getParameter("name");
         String  email = request.getParameter("email");
-        String  password = request.getParameter("password");
+
         int  zip_code = Integer.parseInt(request.getParameter("zip_code"));
 
-        User newUserAdd = new User(0,name,email,password,zip_code);
+        User newUserAdd = new User(0,name,email,longLat,zip_code);
 
         UserDao dao = new UserDao();
         int id = dao.insert(newUserAdd);
 
-        List<User> users = dao.getAll();
-        request.setAttribute("users",users);
 
-        logger.info("DAO GETALL RETURNS===== "+dao.getAll());
+
+        logger.info("new user inserted, ID = "+id);
 
 
         String url = "/index.jsp";
