@@ -25,7 +25,7 @@ public class WeatherApiDao {
         WebTarget target =
                 client.target(apiUrl);
         String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
-        //logger.info("response string from 7timer weather API pre mapper: "+response);
+        logger.info("response string from 7timer weather API pre mapper: "+response);
         ObjectMapper mapper = new ObjectMapper();
 
         Weather weather = mapper.readValue(response, Weather.class);
