@@ -14,14 +14,13 @@
        <h2> <a href = "logIn">Please Log in</a> </h2>
     </c:when>
     <c:otherwise>
+
+
         <h2>Welcome ${cognitoUser.name}</h2>
 
         <h3>Total Projects: ${projects.size()}</h3>
 
-    <h3>Weather for zip code :  ${cognitoUser.zip_code}</h3>
 
-    <h4>Todays High Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMax()}
-        | Todays Low Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMin()}  </h4>
 
         <table id="userTable" class="table ">
             <thead class="thead-dark">
@@ -45,8 +44,18 @@
             </c:forEach>
             </tbody>
         </table>
-        </div>
+
         </article>
+            <article class="col-md-3 text-center">
+                <p>Weather for zip code :  ${cognitoUser.zip_code}</p>
+
+                <p>Todays High Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMax()}
+                     Todays Low Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMin()}  </p>
+
+            </article>
+
+
+        </div>
 
 
 

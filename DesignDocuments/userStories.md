@@ -27,3 +27,10 @@ As a user I want a list of projects that require supplies from the store
 
 ### What do I need help with
 As a user I want a list of projects that require outside help 
+
+### Above User Stories are MVP items
+
+### Stretch goals 
+Creat a schedule of projects based on day / future weather conditions
+show popular projects --many users also have xyz project in que 
+Helpers & Store could be unique tables (vs a column in the projects table)
