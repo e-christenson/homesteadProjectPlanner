@@ -45,7 +45,7 @@ What if we had an organizer app that could do not only keep track of our project
 
 * [User Stories](DesignDocuments/userStories.md)
 * [Tasks](DesignDocuments/tasks.md)
-* [Screen Design](DesignDocuments/Screens.md)
+* [Screen Design](DesignDocuments/wireframes/Screens.md)
 * [Application Flow](DesignDocuments/applicationFlow.md)
 * [Database Design](DesignDocuments/databaseDiagram.png)
 
@@ -57,4 +57,3 @@ Choose a format that works for you, or create your own.
 #### [Weekly Refelection](WeeklyReflection.md)
 #### [Journal](Journal.md)
 #### [TimeLog](TimeLog.md)
-
