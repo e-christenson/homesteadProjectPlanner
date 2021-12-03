@@ -66,8 +66,9 @@ Tasks Completed:
 *
 *
 next items to consider:
-*
-*
+* user login w cognit
+
+
 ### Week 8 oct25
 
 Tasks Completed:
@@ -75,15 +76,15 @@ Tasks Completed:
 
 next items to consider:
 * getting back into a consistent work schedule 
-*
+
 
 
 ### Week 9 nov1
 
 Tasks Completed:
 * began working with cognito on project implementation 
-* 
-*
+
+
 next items to consider:
 *  how to handle user zip code input (cognito signup vs program ask in jsp)
 *
@@ -91,12 +92,11 @@ next items to consider:
 ### Week 10 nov8
 
 Tasks Completed:
-* 
-* 
-*
+* working on team project
+
 next items to consider:
 *
-*
+
 
 ### Week 11 nov15
 
@@ -106,7 +106,7 @@ Tasks Completed:
 *
 next items to consider:
 * 
-*
+
 
 
 ### Week 12 -nov22
