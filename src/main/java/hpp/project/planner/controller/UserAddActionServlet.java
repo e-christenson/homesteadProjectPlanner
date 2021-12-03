@@ -1,8 +1,12 @@
 package hpp.project.planner.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import hpp.project.planner.com.zipCode.PlacesItem;
 import hpp.project.planner.entity.User;
+import hpp.project.planner.persistence.GenericDao;
 import hpp.project.planner.persistence.UserDao;
+import hpp.project.planner.persistence.ZipApiDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +50,7 @@ public class UserAddActionServlet extends HttpServlet {
 
     public void doPost (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String longLat = " ";
+
 
         //info in from web form
         String  name = request.getParameter("name");
@@ -54,11 +58,15 @@ public class UserAddActionServlet extends HttpServlet {
 
         int  zip_code = Integer.parseInt(request.getParameter("zip_code"));
 
+        String longLat = getLocation(zip_code);
+
         User newUserAdd = new User(0,name,email,longLat,zip_code);
 
-        UserDao dao = new UserDao();
+       // UserDao dao = new UserDao();
+        //int id = dao.insert(newUserAdd);
+        GenericDao dao;
+        dao = new GenericDao(User.class);
         int id = dao.insert(newUserAdd);
-
 
 
         logger.info("new user inserted, ID = "+id);
@@ -76,6 +84,16 @@ public class UserAddActionServlet extends HttpServlet {
 
     public void init() throws ServletException {
 
+    }
+
+    private String getLocation(int zipcode) throws JsonProcessingException {
+        ZipApiDao zDAO = new ZipApiDao();
+
+        //first call sets object up for 2nd call
+        zDAO.getCityState(zipcode);
+        String location = zDAO.getLongLatt();
+
+        return location;
     }
 
 

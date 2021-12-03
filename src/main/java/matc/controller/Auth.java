@@ -6,9 +6,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hpp.project.planner.com.zipCode.Weather;
 import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
+import hpp.project.planner.persistence.WeatherApiDao;
 import matc.auth.*;
 import matc.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
@@ -127,6 +129,9 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 cognitoUser = validate(tokenResponse);
                 req.getSession().setAttribute("cognitoUser", cognitoUser);
 
+
+
+
                 //if this is a new user that just signed in, redirect them to user signup
                 //to gather all details of user in our db
 
@@ -134,11 +139,20 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                     url = "userAdd.jsp";
                     //TODO add user to DB and make userAdd jsp have logic to now modify a user
                 }
+                if (cognitoUser.getId() > 0) {
+                    //pull all projects with their ID and set into session
+                    List<Project> projects = getProjectsById(cognitoUser.getId());
+                    req.getSession().setAttribute("projects", projects);
 
-                //pull all projects with their ID and set into session
-                List<Project> projects = getProjectsById(cognitoUser.getId());
+                    //get weather info and add to session
+                    //adding current weather into the session for display
+                    WeatherApiDao wDao = new WeatherApiDao();
+                    Weather currentWeather = wDao.getWeather(cognitoUser.getLonLat());
+                    req.getSession().setAttribute("currentWeather",currentWeather);
 
-                req.getSession().setAttribute("projects", projects);
+
+                }
+
 
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
@@ -345,8 +359,12 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         int userID;
 
         if (users.size() > 0) {
-
+//we know we have a matching user here, so we get the ID and also the zip
+            //for the cognitoUser object
             userID = users.get(0).getId();
+            cognitoUser.setZip_code(users.get(0).getZip_code());
+            cognitoUser.setLonLat(users.get(0).getLonLat());
+            logger.info("zip code from DB call in getIDOfCognitoUSer: "+users.get(0).getZip_code());
         } else {
             userID = -1;
         }

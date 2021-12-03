@@ -21,11 +21,12 @@ public class WeatherApiDao {
 
     public Weather getWeather(String longLatt) throws JsonProcessingException {
         String apiUrl = "https://www.7timer.info/bin/civillight.php?"+longLatt+"&ac=0&unit=british&output=json&tzshift=0";
+        logger.info("web address sent to api (built w location): "+apiUrl);
         Client client = ClientBuilder.newClient();
         WebTarget target =
                 client.target(apiUrl);
         String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
-        //logger.info("response string from 7timer weather API pre mapper: "+response);
+        logger.info("response string from 7timer weather API pre mapper: "+response);
         ObjectMapper mapper = new ObjectMapper();
 
         Weather weather = mapper.readValue(response, Weather.class);

@@ -20,7 +20,7 @@ public class ZipApiDao {
     private String LongLatt;
 
 
-    public List<PlacesItem>  getCityState(String zipCode) throws JsonProcessingException {
+    public List<PlacesItem>  getCityState(int zipCode) throws JsonProcessingException {
         String apiUrl = "http://api.zippopotam.us/us/"+zipCode;
         Client client = ClientBuilder.newClient();
         WebTarget target =
