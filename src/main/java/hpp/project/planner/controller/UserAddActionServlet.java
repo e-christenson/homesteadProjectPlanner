@@ -90,7 +90,7 @@ public class UserAddActionServlet extends HttpServlet {
         ZipApiDao zDAO = new ZipApiDao();
 
         //first call sets object up for 2nd call
-        zDAO.getCityState("53589");
+        zDAO.getCityState(zipcode);
         String location = zDAO.getLongLatt();
 
         return location;

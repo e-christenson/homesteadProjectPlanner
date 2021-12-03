@@ -15,7 +15,7 @@ public class ApiDaoTest {
     public void testZipApi() throws Exception {
         ZipApiDao zDAO = new ZipApiDao();
 
-        List<PlacesItem> pi = zDAO.getCityState("53589");
+        List<PlacesItem> pi = zDAO.getCityState(53589);
 
 
 

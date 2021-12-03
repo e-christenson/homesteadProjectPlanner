@@ -18,6 +18,11 @@
 
         <h3>Total Projects: ${projects.size()}</h3>
 
+    <h3>Weather for zip code :  ${cognitoUser.zip_code}</h3>
+
+    <h4>Todays High Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMax()}
+        | Todays Low Temperature ${currentWeather.getDataseries().get(0).getTemp2m().getMin()}  </h4>
+
         <table id="userTable" class="table ">
             <thead class="thead-dark">
 
@@ -50,6 +55,9 @@
 
     </c:otherwise>
 </c:choose>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </main>
 </body>
 </html>
