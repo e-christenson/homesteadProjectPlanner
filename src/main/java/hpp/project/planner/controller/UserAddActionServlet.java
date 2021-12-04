@@ -3,9 +3,11 @@ package hpp.project.planner.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import hpp.project.planner.com.zipCode.PlacesItem;
+import hpp.project.planner.com.zipCode.Weather;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import hpp.project.planner.persistence.UserDao;
+import hpp.project.planner.persistence.WeatherApiDao;
 import hpp.project.planner.persistence.ZipApiDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,17 +61,21 @@ public class UserAddActionServlet extends HttpServlet {
         int  zip_code = Integer.parseInt(request.getParameter("zip_code"));
 
         String longLat = getLocation(zip_code);
-
+//setup new user and add to DB
         User newUserAdd = new User(0,name,email,longLat,zip_code);
 
-       // UserDao dao = new UserDao();
-        //int id = dao.insert(newUserAdd);
         GenericDao dao;
         dao = new GenericDao(User.class);
         int id = dao.insert(newUserAdd);
+        logger.info("!!!NEW!!! user inserted, ID = "+id);
+  //add new user to session, get weather for new user and add to session
+        request.getSession().setAttribute("cognitoUser", newUserAdd);
+
+        WeatherApiDao wDao = new WeatherApiDao();
+        Weather currentWeather = wDao.getWeather(newUserAdd.getLonLat());
+        request.getSession().setAttribute("currentWeather",currentWeather);
 
 
-        logger.info("new user inserted, ID = "+id);
 
 
         String url = "/index.jsp";
