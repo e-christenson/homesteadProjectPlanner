@@ -12,7 +12,7 @@
         <h2>Add Project page</h2><br>
     </div>
 
-<div class="row col-md-9 text-center">
+<div class="row text-center">
 
         <form action="HPPaddProject" method="POST" class="border">
 
@@ -22,7 +22,7 @@
             <input type="text" name="projectName" id="projectName"/><br />
 
             <label for="helper">Project Helper Name</label>
-            <input type="text" name="helper" id="helper" value="n"/><br />
+            <input type="text" name="helper" id="helper"/><br />
 
             <label for="store">Items needed from Store</label>
             <input type="text" name="store" id="store"/><br />

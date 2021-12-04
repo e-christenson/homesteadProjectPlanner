@@ -56,7 +56,7 @@ public class ProjectAddActionServlet extends HttpServlet {
         //info in from web form
         String email = request.getParameter("email");
 String helper = request.getParameter("helper");
-
+String store = request.getParameter("store");
 
         String  projectName = request.getParameter("projectName");
         String  day = request.getParameter("day");
@@ -68,7 +68,7 @@ String helper = request.getParameter("helper");
         dao = new GenericDao(Project.class);
 
         users = userDao.findByPropertyEqual("email",email);
-        Project newProject = new Project( 0, users.get(0), projectName,  day, day, helper, "n", "n", "n", "n");
+        Project newProject = new Project( 0, users.get(0), projectName,  day, day, helper, store, "n", "n", "n");
         users.get(0).addProject(newProject);
         logger.info("is newProject set???  "+newProject);
         dao.insert(newProject);

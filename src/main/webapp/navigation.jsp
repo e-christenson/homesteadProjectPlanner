@@ -12,11 +12,10 @@
                 <li class="nav-item">
                     <a  class="nav-link" href="index.jsp">My Helpers</a></li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contactUs.html">Store List</a></li>
+                    <a class="nav-link" href="index.jsp">Store List</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href = "logIn">Log Out</a> </li>
             </ul>
-
+        </div>
     </nav>
 </row>
-</div>
