@@ -45,8 +45,6 @@ public class StoreTest {
 
         assertEquals("belts", pullFromDB.getItem());
 
-
-
     }
 
 }
