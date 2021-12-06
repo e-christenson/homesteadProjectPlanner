@@ -54,7 +54,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
         String email = request.getParameter("email");
         String projectId = request.getParameter("projectId");
 
-        projects = deleteUser(email,projectId);
+        projects = deleteUserProject(email,projectId);
         logger.debug("just deleted, new projects list =  "+projects);
         request.getSession().setAttribute("projects", projects);
 
@@ -75,7 +75,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
 
         String projectId = request.getParameter("projectId");
         logger.debug("email/projectID from get session call "+email +" id: "+projectId);
-        projects = deleteUser(email, projectId);
+        projects = deleteUserProject(email, projectId);
         request.getSession().setAttribute("projects", projects);
 
         /* try {
@@ -104,7 +104,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     }
 
 
-   private List<Project> deleteUser(String email, String projectId) {
+   private List<Project> deleteUserProject(String email, String projectId) {
        userDao = new GenericDao(User.class);
        dao = new GenericDao(Project.class);
 

@@ -23,7 +23,7 @@
 
                 <th>Name</th>
                 <th>Helper</th>
-                <th>Store list</th>
+                <th>Items from Store</th>
                 <th>Actions</th>
 
                 </thead>

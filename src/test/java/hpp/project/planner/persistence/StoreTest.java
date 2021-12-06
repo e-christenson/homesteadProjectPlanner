@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +21,10 @@ public class StoreTest {
 
     GenericDao dao;
     GenericDao projectDao;
+    GenericDao storeDao;
     List<Project> projects;
+    List<Store>  stores;
+    Store store;
 
 
     /**
@@ -29,7 +34,7 @@ public class StoreTest {
     void setUp() {
         dao = new GenericDao(Store.class);
         projectDao = new GenericDao(Project.class);
-
+        storeDao = new GenericDao(Store.class);
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }
@@ -37,13 +42,24 @@ public class StoreTest {
 
     @Test
     void insertNewStoreItem() {
+
         projects =  projectDao.findByPropertyEqual("id",1);
-        Store newStoreInsert = new Store(0,projects.get(0),"belts");
-        int projectNum = dao.insert(newStoreInsert);
+        Store newStoreInsert = new Store(0,1,1,"belts");
+       // projects.get(0).addStore(newStoreInsert);
+        int projectNum = storeDao.insert(newStoreInsert);
+        //Store pullFromDB = storeDao.getById(projectNum);
+       // assertEquals("belts", pullFromDB.getItem());
 
-        Store pullFromDB = (Store) dao.getById(projectNum);
+    }
 
-        assertEquals("belts", pullFromDB.getItem());
+
+    @Test
+    void getStoreByUser(){
+        //get all projects by user
+        projects =  projectDao.findByPropertyEqual("id",1);
+        //find store items for each project
+   stores =  storeDao.findByPropertyEqual("project_id",projects.get(0).getId());
+
 
     }
 

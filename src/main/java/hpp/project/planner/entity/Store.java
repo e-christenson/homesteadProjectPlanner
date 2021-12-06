@@ -2,9 +2,6 @@ package hpp.project.planner.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 /**
 
@@ -19,14 +16,18 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
-    @ManyToOne
-    private Project project;
+
+    //@ManyToOne
+   // private Project parent_project;
+    private int project_id;
+    private int user_id;
 
     private String item;
 
-    public Store(int id, Project project, String item) {
+    public Store(int id, int project, int user_id, String item) {
         this.id = id;
-        this.project = project;
+        this.project_id = project;
+        this.user_id = user_id;
         this.item = item;
     }
 
@@ -42,12 +43,12 @@ public class Store {
         this.id = id;
     }
 
-    public Project getProject() {
-        return project;
+    public int getProject() {
+        return project_id;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProject(int project) {
+        this.project_id = project;
     }
 
     public String getItem() {
@@ -62,7 +63,7 @@ public class Store {
     public String toString() {
         return "Store{" +
                 "id=" + id +
-                ", project=" + project +
+                ", project=" + project_id +
                 ", item='" + item + '\'' +
                 '}';
     }

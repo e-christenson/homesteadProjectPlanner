@@ -29,7 +29,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 
-
     private Set<Project> Projects = new HashSet<>();
 
 
