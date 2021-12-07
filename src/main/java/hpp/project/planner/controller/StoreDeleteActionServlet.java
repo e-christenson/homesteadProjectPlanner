@@ -6,10 +6,8 @@ import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +24,10 @@ import java.util.List;
  * @author EChristenson
  */
 @WebServlet(
-        name = "HPPdeleteProject",
-        urlPatterns = {"/HPPdeleteProject"}
+        name = "HPPdeleteStore",
+        urlPatterns = {"/HPPdeleteStore"}
 )
-public class ProjectDeleteActionServlet extends HttpServlet {
+public class StoreDeleteActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     GenericDao dao;
@@ -43,7 +41,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
 
-        String action = request.getServletPath();
+
         User loggedInUser = (User) ses.getAttribute("cognitoUser");
         String email = loggedInUser.getEmail();
 

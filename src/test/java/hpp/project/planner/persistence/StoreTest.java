@@ -43,12 +43,12 @@ public class StoreTest {
     @Test
     void insertNewStoreItem() {
 
-        projects =  projectDao.findByPropertyEqual("id",1);
+        //projects =  projectDao.findByPropertyEqual("id",1);
         Store newStoreInsert = new Store(0,1,1,"belts");
        // projects.get(0).addStore(newStoreInsert);
         int projectNum = storeDao.insert(newStoreInsert);
-        //Store pullFromDB = storeDao.getById(projectNum);
-       // assertEquals("belts", pullFromDB.getItem());
+        Store pullFromDB = (Store) storeDao.getById(projectNum);
+       assertEquals("belts", pullFromDB.getItem());
 
     }
 
@@ -62,5 +62,18 @@ public class StoreTest {
 
 
     }
+    @Test
+    void deleteStoreItem(){
+        List<Store> storeToModify = storeDao.findByPropertyEqual("project_id",1);
+storeToModify.get(0).setItem("MotorOil");
+storeDao.insert(storeToModify.get(0));
+
+        List<Store> storeWeModify = storeDao.findByPropertyEqual("project_id",1);
+        assertEquals("motoroil", storeWeModify.get(1).getItem());
+
+
+    }
+
+
 
 }

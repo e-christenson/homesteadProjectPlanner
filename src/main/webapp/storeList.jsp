@@ -16,23 +16,21 @@
             <c:otherwise>
 
 
-            <h2>Welcome - you are logged in as: ${cognitoUser.name}</h2>
-                <h3>Total Projects: ${projects.size()}</h3>
-                <table id="userTable" class="table ">
+            <h2>Store shopping list for: ${cognitoUser.name}</h2>
+                <h3>Total items: ${storeList.size()}</h3>
+            <table id="userTable" class="table ">
                 <thead class="thead-dark">
 
-                <th>Name</th>
-                <th>Helper</th>
-                <th>Items from Store</th>
+
+                <th>Items </th>
                 <th>Actions</th>
 
                 </thead>
                 <tbody>
-                <c:forEach var="project" items="${projects}">
+                <c:forEach var="store" items="${storeList}">
                     <tr>
-                        <td>${project.getProject_name()} </td>
-                        <td>${project.getHelper()} </td>
-                        <td>${project.getStore()} </td>
+
+                        <td>${store.getItem()} </td>
                         <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
                     </tr>
 
@@ -44,7 +42,7 @@
 
         <article class="col-md-3 text-center mx-2 my-auto">
             <img src="images/weatherMap.jpg" class="img-fluid" alt="weatherIcon">
-            <h3>Weather for ZIP: ${cognitoUser.zip_code}</h3>
+            <p>Weather for ZIP: ${cognitoUser.zip_code}</p>
 
             <table id="weatherTable" class="table table-sm">
                 <thead class="thead-success">
