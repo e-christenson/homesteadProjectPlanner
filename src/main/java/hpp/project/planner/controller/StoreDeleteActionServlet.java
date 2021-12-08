@@ -2,6 +2,7 @@ package hpp.project.planner.controller;
 
 
 import hpp.project.planner.entity.Project;
+import hpp.project.planner.entity.Store;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
@@ -30,40 +31,28 @@ import java.util.List;
 public class StoreDeleteActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
-    GenericDao dao;
-    GenericDao userDao;
-    List<Project> projects;
-    List<User> users;
+    GenericDao sDao = new GenericDao(Store.class);
+
 
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
+        int Id = Integer.parseInt(request.getParameter("Id"));
+        Store store = (Store) sDao.getById(Id);
+        //user can have a stale page on browser, so if we come into this
+        //servlet w/o session data we skip the delete and go to login screen
+        if (store != null){
+
+            sDao.delete(store);
+        }
 
 
-        User loggedInUser = (User) ses.getAttribute("cognitoUser");
-        String email = loggedInUser.getEmail();
 
-        String projectId = request.getParameter("projectId");
-        logger.debug("email/projectID from get session call "+email +" id: "+projectId);
-        projects = deleteUserProject(email, projectId);
-        request.getSession().setAttribute("projects", projects);
 
-        /* try {
-            switch (action) {
 
-                case "/delete":
-                    projects = deleteUser(email, projectId);
-                    break;
-
-            }
-            request.getSession().setAttribute("projects", projects);
-        } catch (Exception ex) {
-            throw new ServletException(ex);
-        } */
-
-        String url = "/index.jsp";
+        String url = "/storeList";
         request.setAttribute("url", url);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -76,21 +65,7 @@ public class StoreDeleteActionServlet extends HttpServlet {
     }
 
 
-   private List<Project> deleteUserProject(String email, String projectId) {
-       userDao = new GenericDao(User.class);
-       dao = new GenericDao(Project.class);
 
-       projects = dao.findByPropertyEqual("id", projectId);
-
-       dao.delete(projects.get(0));
-
-       //get all projects for the user and set new list into the session
-       users = userDao.findByPropertyEqual("email", email);
-       projects = dao.findByPropertyEqual("user", users.get(0));
-
-       return projects;
-
-    }
 
 
 }

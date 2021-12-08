@@ -85,6 +85,20 @@ class ProjectTest {
 
     }
 
+    @Test
+    void updateProject(){
+        Project projectToUpdate = (Project) dao.getById(3);
+        final String originalProjectName = projectToUpdate.getProject_name();
+        projectToUpdate.setProject_name("Take Recyclables out");
+        dao.saveOrUpdate(projectToUpdate);
+        Project updatedProject = (Project) dao.getById(3);
+        assertNotEquals(originalProjectName, updatedProject.getProject_name());
+
+
+    }
+
+
+
 
     @Test
     void deleteProject(){

@@ -1,10 +1,18 @@
-<%@include file="head.jsp" %>
-<%@include file="taglib.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <html>
+<jsp:include page="head.jsp" />
+<!-- used for the sorting/paging on the table -->
+<script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('#ProjectsTable').DataTable();
+    } );
+</script>
 <body>
 <main class="container bg-light">
-    <%@include file="header.jsp" %>
-    <%@include file="navigation.jsp" %>
+    <jsp:include page="header.jsp" />
+    <jsp:include page="navigation.jsp" />
 
 
     <div class="row">
@@ -18,7 +26,7 @@
 
             <h2>Welcome - you are logged in as: ${cognitoUser.name}</h2>
                 <h3>Total Projects: ${projects.size()}</h3>
-                <table id="userTable" class="table ">
+                <table id="ProjectsTable" class="display">
                 <thead class="thead-dark">
 
                 <th>Name</th>
@@ -85,9 +93,7 @@
     </c:choose>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>

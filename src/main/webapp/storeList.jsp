@@ -1,10 +1,10 @@
-<%@include file="head.jsp" %>
-<%@include file="taglib.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="head.jsp" />
 <html>
 <body>
 <main class="container bg-light">
-    <%@include file="header.jsp" %>
-    <%@include file="navigation.jsp" %>
+    <jsp:include page="header.jsp" />
+    <jsp:include page="navigation.jsp" />
 
 
     <div class="row">
@@ -31,7 +31,7 @@
                     <tr>
 
                         <td>${store.getItem()} </td>
-                        <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
+                        <td><a href="HPPdeleteStore?Id=${store.getId()}"/> DELETE </a> </td>
                     </tr>
 
                 </c:forEach>
