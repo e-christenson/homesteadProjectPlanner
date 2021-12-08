@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hpp.project.planner.com.zipCode.Weather;
 import hpp.project.planner.entity.Project;
+import hpp.project.planner.entity.Store;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import hpp.project.planner.persistence.WeatherApiDao;
@@ -378,6 +379,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         return projects;
     }
+
 
 
 }

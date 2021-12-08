@@ -54,6 +54,6 @@ What if we had an organizer app that could do not only keep track of our project
 ### Examples of documentation of progress, reflections, and time spent on this class
 Choose a format that works for you, or create your own.
 
-#### [Weekly Refelection](WeeklyReflections.md)
+#### [Weekly Reflection](WeeklyReflections.md)
 
 #### [TimeLog](TimeLog.md)

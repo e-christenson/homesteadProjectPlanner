@@ -38,32 +38,6 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     List<User> users;
 
 
-    /**
-     * Handles HTTP GET requests.
-     *
-     * @param request  the HttpServletRequest object
-     * @param response the HttpServletResponse object
-     * @throws ServletException if there is a Servlet failure
-     * @throws IOException      if there is an IO failure
-     */
-
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //info in from web form
-        String email = request.getParameter("email");
-        String projectId = request.getParameter("projectId");
-
-        projects = deleteUser(email,projectId);
-        logger.debug("just deleted, new projects list =  "+projects);
-        request.getSession().setAttribute("projects", projects);
-
-
-        String url = "/index.jsp";
-        request.setAttribute("url", url);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,7 +49,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
 
         String projectId = request.getParameter("projectId");
         logger.debug("email/projectID from get session call "+email +" id: "+projectId);
-        projects = deleteUser(email, projectId);
+        projects = deleteUserProject(email, projectId);
         request.getSession().setAttribute("projects", projects);
 
         /* try {
@@ -104,7 +78,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     }
 
 
-   private List<Project> deleteUser(String email, String projectId) {
+   private List<Project> deleteUserProject(String email, String projectId) {
        userDao = new GenericDao(User.class);
        dao = new GenericDao(Project.class);
 

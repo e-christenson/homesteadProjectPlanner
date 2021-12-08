@@ -3,6 +3,10 @@ package hpp.project.planner.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The type Project.
@@ -26,12 +30,12 @@ public class Project {
     private String sat_sun;
     private String helper;
     private String store;
-
     private String in_out;
-
     private String hot_cold;
-
     private String windy;
+
+    //@OneToMany(mappedBy = "parent_project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+   // private List<Store> stores;
 
 
     public Project(int id, User user, String project_name, String mon_fri, String sat_sun, String helper, String store, String in_out, String hot_cold, String windy) {
@@ -126,6 +130,25 @@ public class Project {
     public void setWindy(String windy) {
         this.windy = windy;
     }
+/*
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
+
+    public void addStore(Store store){
+        stores.add(store);
+        store.setProject(this);
+    }
+
+    public void removeStore(Store store){
+        stores.add(store);
+        store.setProject(null);
+    }
+*/
 
     /**
      * Instantiates a new Project.
