@@ -6,8 +6,11 @@
 <!-- used for the sorting/paging on the table -->
 <script type="text/javascript" class="init">
     $(document).ready( function () {
-        $('#ProjectsTable').DataTable();
-    } );
+        $('#ProjectsTable').DataTable({
+            "lengthChange": false
+        });
+    });
+
 </script>
 <body>
 <main class="container bg-light">
@@ -24,8 +27,8 @@
             <c:otherwise>
 
 
-            <h2>Welcome - you are logged in as: ${cognitoUser.name}</h2>
-                <h3>Total Projects: ${projects.size()}</h3>
+            <h3> ${cognitoUser.name}'s Projects</h3>
+
                 <table id="ProjectsTable" class="display">
                 <thead class="thead-dark">
 

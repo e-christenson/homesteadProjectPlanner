@@ -36,7 +36,7 @@ import java.util.Properties;
 )
 public class StoreListDisplay extends HttpServlet {
 
-
+    String url = "/index.jsp";
 
     /**
      *
@@ -49,18 +49,23 @@ public class StoreListDisplay extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.setAttribute("rowAdded", "");
-
-        User congitoUser = (User) session.getAttribute("cognitoUser");
-        GenericDao sDao = new GenericDao(Store.class);
-        List<Store> storeL = sDao.findByPropertyEqual("user_id", congitoUser.getId());
-
-        request.setAttribute("storeList",storeL);
 
 
+            User congitoUser = (User) request.getAttribute("cognitoUser");
+            GenericDao sDao = new GenericDao(Store.class);
 
-        String url = "/storeList.jsp";
+            if (congitoUser.getEmail() == null );{   RequestDispatcher  dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response); }
+
+            List<Store> storeL = sDao.findByPropertyEqual("user_id", congitoUser.getId());
+
+            request.setAttribute("storeList", storeL);
+
+
+            String url = "/storeList.jsp";
+
+
+
 
         RequestDispatcher  dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
