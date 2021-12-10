@@ -4,21 +4,17 @@ package hpp.project.planner.controller;
 import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
-import hpp.project.planner.persistence.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 /**
  *  Homestead Project Planer

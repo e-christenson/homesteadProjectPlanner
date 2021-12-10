@@ -2,21 +2,18 @@ package hpp.project.planner.controller;
 
 
 import hpp.project.planner.entity.User;
-import hpp.project.planner.persistence.UserDao;
+import hpp.project.planner.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 /**
  *  Homestead Project Planer
@@ -55,7 +52,7 @@ public class UserAddActionServlet extends HttpServlet {
 
         User newUserAdd = new User(0,name,email,password,zip_code);
 
-        UserDao dao = new UserDao();
+        GenericDao dao = new GenericDao(User.class);
         int id = dao.insert(newUserAdd);
 
         List<User> users = dao.getAll();
