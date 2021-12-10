@@ -1,32 +1,38 @@
-<%@include file="head.jsp"%>
-<%@include file="taglib.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="head.jsp" />
+
 <html>
 <body>
 <main class="container bg-light">
-    <%@include file="header.jsp"%>
-    <%@include file="navigation.jsp"%>
+    <jsp:include page="header.jsp" />
+    <jsp:include page="navigation.jsp" />
 
 
 
     <div id="main" class="row">
-        <h2>Add Project page</h2><br>
+        <h2 class="mx-auto">Enter New Project</h2><br>
     </div>
 
-<div class="row col-md-9 text-center">
+<div class="row text-center">
 
-        <form action="HPPaddProject" method="POST" class="border">
-
+        <form action="HPPaddProject" method="POST" class="mx-auto border">
+            <p>User : ${cognitoUser.name}</p>
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
 
+            <div class="form-group">
             <label for="projectName">Project Name</label>
             <input type="text" name="projectName" id="projectName"/><br />
+            </div>
 
+            <div class="form-group">
             <label for="helper">Project Helper Name</label>
-            <input type="text" name="helper" id="helper" value="n"/><br />
+            <input type="text" name="helper" id="helper"/><br />
+            </div>
 
+            <div class="form-group">
             <label for="store">Items needed from Store</label>
             <input type="text" name="store" id="store"/><br />
-
+            </div>
 
 
             <fieldset class="border border-dark rounded">

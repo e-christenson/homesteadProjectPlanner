@@ -20,7 +20,7 @@ public class ZipApiDao {
     private String LongLatt;
 
 
-    public ZipApiDao(String zipCode) throws JsonProcessingException {
+    public List<PlacesItem>  getCityState(int zipCode) throws JsonProcessingException {
         String apiUrl = "http://api.zippopotam.us/us/"+zipCode;
         Client client = ClientBuilder.newClient();
         WebTarget target =
@@ -32,7 +32,7 @@ public class ZipApiDao {
         ZipCode zipcode = mapper.readValue(response, ZipCode.class);
         cityName = zipcode.getPlaces().get(0).getPlaceName();
         LongLatt = ("lon="+zipcode.getPlaces().get(0).getLongitude()+"&lat="+zipcode.getPlaces().get(0).getLatitude());
-
+return  zipcode.getPlaces();
     }
 
     public String getLocationFromZip() {

@@ -1,17 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<html>
 <jsp:include page="head.jsp" />
-<!-- used for the sorting/paging on the table -->
-<script type="text/javascript" class="init">
-    $(document).ready( function () {
-        $('#ProjectsTable').DataTable({
-            "lengthChange": false
-        });
-    });
-
-</script>
+<html>
 <body>
 <main class="container bg-light">
     <jsp:include page="header.jsp" />
@@ -27,24 +16,22 @@
             <c:otherwise>
 
 
-            <h3> ${cognitoUser.name}'s Projects</h3>
-
-                <table id="ProjectsTable" class="display">
+            <h2>Store shopping list for: ${cognitoUser.name}</h2>
+                <h3>Total items: ${storeList.size()}</h3>
+            <table id="userTable" class="table ">
                 <thead class="thead-dark">
 
-                <th>Name</th>
-                <th>Helper</th>
-                <th>Items from Store</th>
+
+                <th>Items </th>
                 <th>Actions</th>
 
                 </thead>
                 <tbody>
-                <c:forEach var="project" items="${projects}">
+                <c:forEach var="store" items="${storeList}">
                     <tr>
-                        <td>${project.getProject_name()} </td>
-                        <td>${project.getHelper()} </td>
-                        <td>${project.getStore()} </td>
-                        <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
+
+                        <td>${store.getItem()} </td>
+                        <td><a href="HPPdeleteStore?Id=${store.getId()}"/> DELETE </a> </td>
                     </tr>
 
                 </c:forEach>
@@ -55,7 +42,7 @@
 
         <article class="col-md-3 text-center mx-2 my-auto">
             <img src="images/weatherMap.jpg" class="img-fluid" alt="weatherIcon">
-            <h3>Weather for ZIP: ${cognitoUser.zip_code}</h3>
+            <p>Weather for ZIP: ${cognitoUser.zip_code}</p>
 
             <table id="weatherTable" class="table table-sm">
                 <thead class="thead-success">
@@ -96,7 +83,9 @@
     </c:choose>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
