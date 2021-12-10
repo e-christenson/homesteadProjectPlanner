@@ -6,7 +6,7 @@ import hpp.project.planner.com.zipCode.Weather;
 import hpp.project.planner.entity.Store;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
-import hpp.project.planner.persistence.UserDao;
+
 import hpp.project.planner.persistence.WeatherApiDao;
 import hpp.project.planner.persistence.ZipApiDao;
 import org.apache.logging.log4j.LogManager;
