@@ -16,7 +16,7 @@
 <div class="row text-center">
 
         <form action="HPPaddProject" method="POST" class="mx-auto border">
-
+            <p>User : ${cognitoUser.name}</p>
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
 
             <div class="form-group">

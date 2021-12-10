@@ -365,6 +365,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
             userID = users.get(0).getId();
             cognitoUser.setZip_code(users.get(0).getZip_code());
             cognitoUser.setLonLat(users.get(0).getLonLat());
+            cognitoUser.setId(userID);
             logger.info("zip code from DB call in getIDOfCognitoUSer: "+users.get(0).getZip_code());
         } else {
             userID = -1;
