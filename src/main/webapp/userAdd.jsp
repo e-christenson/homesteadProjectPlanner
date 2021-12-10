@@ -6,18 +6,22 @@ Author: Erik Christenson
 new user sign up form
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
-
+<jsp:include page="head.jsp" />
 
 <body>
-<div id="container">
+<main class="container bg-light">
+    <jsp:include page="header.jsp" />
+    <jsp:include page="navigation.jsp" />
 
-<div id="main">
+<div id="container" class="row">
+
+<div id="main" class="col-md-10 text-center">
     <h3>Welcome ${cognitoUser.name}</h3>
-    <h2>Your email is: ${cognitoUser.getEmail()}</h2>
+
 
 <h2>Welcome -- This is your first log in, please enter your Zip Code</h2>
 
-      <form action="HPPaddUser" method="POST">
+      <form action="HPPaddUser" method="POST" class="form">
 
 
       <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
@@ -40,7 +44,7 @@ new user sign up form
 
 </div>
 
-
+</main>
 </body>
 </html>
 
