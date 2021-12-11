@@ -40,13 +40,13 @@
                 <p>Default is any day- but you can change that below  </p>
                 <div class="form-group">
                     <fieldset class="border border-secondary rounded mx-5">
-                    <input type="checkbox" value="y" id="weekDay" name="Wday"  >
+                    <input type="radio" value="y" id="weekDay" name="Wday"  >
                     <label for="weekDay">Weekday</label>
 
-                    <input type="checkbox" value="y" id="weekend"  name="Sday" >
+                    <input type="radio" value="y" id="weekend"  name="Sday" >
                     <label for="Weekend">Weekend</label>
 
-                        <input type="checkbox" value="" id="any"  name="Sday" checked>
+                        <input type="radio" value="" id="any"  name="Sday" checked>
                         <label for="any">Any Day</label>
 
                     </fieldset>

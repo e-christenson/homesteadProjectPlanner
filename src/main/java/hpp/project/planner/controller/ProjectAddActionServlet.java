@@ -30,9 +30,10 @@ public class ProjectAddActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
     GenericDao dao;
-    GenericDao userDao;
-    List<Project> projects;
-    List<User> users;
+    //GenericDao userDao;
+   // List<Project> projects;
+    //List<User> users;
+    User loggedInUser;
 
 
     /**
@@ -51,9 +52,9 @@ public class ProjectAddActionServlet extends HttpServlet {
             throws ServletException, IOException {
 
         //info in from web form
-        String email = request.getParameter("email");
-String helper = request.getParameter("helper");
-String store = request.getParameter("store");
+        //String email = request.getParameter("email");
+    String helper = request.getParameter("helper");
+    String store = request.getParameter("store");
         String  projectName = request.getParameter("projectName");
         //String  day = request.getParameter("day");
         String  Wday = request.getParameter("Wday");
@@ -76,19 +77,21 @@ String store = request.getParameter("store");
 
 
 
-        userDao = new GenericDao(User.class);
+       // userDao = new GenericDao(User.class);
         dao = new GenericDao(Project.class);
 
-        users = userDao.findByPropertyEqual("email",email);
-        Project newProject = new Project( insertOrEdit, users.get(0), projectName,  Wday, Sday, helper, storeYn, in_out, hot_cold, windy);
-        users.get(0).addProject(newProject);
+        //users = userDao.findByPropertyEqual("email",email);
+        loggedInUser = (User) request.getSession().getAttribute("cognitoUser");
+
+        Project newProject = new Project( insertOrEdit, loggedInUser, projectName,  Wday, Sday, helper, storeYn, in_out, hot_cold, windy);
+        loggedInUser.addProject(newProject);
         logger.info("is newProject set???  "+newProject);
 
 
        int newProjectID = dao.insert(newProject);
 
         //get back newProject, but now we have project ID.  its project 0 in the list
-        List<Project> insertedNewProject = dao.findByPropertyEqual("id",newProjectID);
+        //List<Project> insertedNewProject = dao.findByPropertyEqual("id",newProjectID);
         //now that project is added we can add store itmes (tied to project)
         //function to turn store string into array, and set
         //each item as its own row in the store DB table
@@ -96,7 +99,7 @@ String store = request.getParameter("store");
 
         //if store is empty we set DB to n
         if (store.length() >1 ){
-            setStoreStringToDB(store,insertedNewProject.get(0));
+            setStoreStringToDB(store,newProjectID);
         }
 
 
@@ -105,10 +108,10 @@ String store = request.getParameter("store");
 
 
         //get all projects for user and add into session
-projects = dao.findByPropertyEqual("user",users.get(0).getId());
-request.getSession().setAttribute("projects",projects);
+//projects = dao.findByPropertyEqual("user",loggedInUser.getId());
+//request.getSession().setAttribute("projects",projects);
 
-        String url = "/index.jsp";
+        String url = "/index";
 
         //testing sc / el
         request.setAttribute("url",url);
@@ -120,12 +123,12 @@ request.getSession().setAttribute("projects",projects);
     public void init() throws ServletException {
     }
 
-    private void setStoreStringToDB(String storeString, Project newProject){
+    private void setStoreStringToDB(String storeString, int projectID){
         GenericDao dao = new GenericDao(Store.class);
         String[] indItemsStore = storeString.split("\\s+");
 
         for (String item: indItemsStore ) {
-            Store newInsert = new Store(0,newProject.getId(),newProject.getUser().getId(),item);
+            Store newInsert = new Store(0,projectID,loggedInUser.getId(),item);
            // newProject.addStore(newInsert);
             dao.insert(newInsert);
 

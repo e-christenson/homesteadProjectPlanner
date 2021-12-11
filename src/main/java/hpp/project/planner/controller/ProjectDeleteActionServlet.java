@@ -49,8 +49,8 @@ public class ProjectDeleteActionServlet extends HttpServlet {
 
         String projectId = request.getParameter("projectId");
         logger.debug("email/projectID from get session call "+email +" id: "+projectId);
-        projects = deleteUserProject(email, projectId);
-        request.getSession().setAttribute("projects", projects);
+       deleteUserProject(email, projectId);
+        //request.getSession().setAttribute("projects", projects);
 
         /* try {
             switch (action) {
@@ -65,7 +65,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
             throw new ServletException(ex);
         } */
 
-        String url = "/index.jsp";
+        String url = "/index";
         request.setAttribute("url", url);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -78,7 +78,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     }
 
 
-   private List<Project> deleteUserProject(String email, String projectId) {
+   private void  deleteUserProject(String email, String projectId) {
        userDao = new GenericDao(User.class);
        dao = new GenericDao(Project.class);
 
@@ -86,11 +86,7 @@ public class ProjectDeleteActionServlet extends HttpServlet {
 
        dao.delete(projects.get(0));
 
-       //get all projects for the user and set new list into the session
-       users = userDao.findByPropertyEqual("email", email);
-       projects = dao.findByPropertyEqual("user", users.get(0));
 
-       return projects;
 
     }
 

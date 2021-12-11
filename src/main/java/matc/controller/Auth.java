@@ -118,7 +118,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
-        String url = "index.jsp";
+        String url = "/index";
 
         if (authCode == null) {
             //TODO forward to an error page or back to the login
@@ -142,8 +142,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
                 }
                 if (cognitoUser.getId() > 0) {
                     //pull all projects with their ID and set into session
-                    List<Project> projects = getProjectsById(cognitoUser.getId());
-                    req.getSession().setAttribute("projects", projects);
+                   // List<Project> projects = getProjectsById(cognitoUser.getId());
+                   // req.getSession().setAttribute("projects", projects);
 
                     //get weather info and add to session
                     //adding current weather into the session for display
@@ -373,14 +373,14 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         return userID;
     }
 
-
+/**
     private List<Project> getProjectsById(int idNum) {
         GenericDao dao = new GenericDao(Project.class);
         List<Project> projects = dao.findByPropertyEqual("user", idNum);
 
         return projects;
     }
-
+*/
 
 
 }
