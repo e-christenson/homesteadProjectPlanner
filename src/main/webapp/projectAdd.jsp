@@ -36,51 +36,61 @@
 
 
             <fieldset class="border border-dark rounded">
-                <h3>Day of the week works best for this project</h3>
+                <h3>When</h3>
+                <p>Default is any day- but you can change that below  </p>
                 <div class="form-group">
-                    <input type="radio" value="m" id="weekDay" name="day"  >
+                    <fieldset class="border border-secondary rounded mx-5">
+                    <input type="checkbox" value="y" id="weekDay" name="Wday"  >
                     <label for="weekDay">Weekday</label>
 
-                    <input type="radio" value="s" id="weekend"  name="day" >
+                    <input type="checkbox" value="y" id="weekend"  name="Sday" >
                     <label for="Weekend">Weekend</label>
 
-                    <input type="radio" value="b" id="both"  name="day" checked>
-                    <label for="both">Any Day</label>
+                        <input type="checkbox" value="" id="any"  name="Sday" checked>
+                        <label for="any">Any Day</label>
+
+                    </fieldset>
+
                 </div>
             </fieldset>
 
             <fieldset class="border border-dark rounded">
-                <h3>Location of the project</h3>
+                <h3>Where</h3>
+                <p>Default is outside- but you can change that below</p>
                 <div class="form-group">
+                    <fieldset class="border border-secondary rounded mx-5">
                     <input type="radio" value="i" id="inside" name="in_out"  >
                     <label for="inside">Inside</label>
 
-                    <input type="radio" value="o" id="outside"  name="in_out" checked >
+                    <input type="radio" value="" id="outside"  name="in_out" checked >
                     <label for="outside">Outside</label>
+                    </fieldset>
                 </div>
             </fieldset>
 
             <fieldset class="border border-dark rounded">
-                <h3>Weather Factors- This project is best suited for </h3>
+                <h3>Pick useful weather conditions</h3>
+                <p>leave blank if these don't apply</p>
+                <p></p>
                 <div class="form-group">
+                    <fieldset class="border border-secondary rounded mx-5">
                     <input type="radio" value="h" id="hot" name="hot_cold"  >
                     <label for="hot">Hot Day</label>
 
                     <input type="radio" value="c" id="cold"  name="hot_cold" >
                     <label for="cold">Cold Day</label>
+                    </fieldset>
 
-                    <input type="radio" value="b" id="hotcold"  name="hot_cold" checked>
-                    <label for="both">Any Day</label>
                 </div>
                 <div class="form-group">
+                    <fieldset class="border border-secondary rounded mx-5">
                     <input type="radio" value="w" id="windy" name="windy"  >
                     <label for="windy">Windy Day</label>
 
                     <input type="radio" value="c" id="calm"  name="windy" >
                     <label for="calm">Calm Day</label>
+                    </fieldset>
 
-                    <input type="radio" value="b" id="anyW"  name="windy" checked>
-                    <label for="anyW">Any Day</label>
                 </div>
 
             </fieldset>

@@ -55,7 +55,16 @@ public class ProjectAddActionServlet extends HttpServlet {
 String helper = request.getParameter("helper");
 String store = request.getParameter("store");
         String  projectName = request.getParameter("projectName");
-        String  day = request.getParameter("day");
+        //String  day = request.getParameter("day");
+        String  Wday = request.getParameter("Wday");
+        String  Sday = request.getParameter("Sday");
+        String  in_out = request.getParameter("in_out");
+        String  hot_cold = request.getParameter("hot_cold");
+        String  windy = request.getParameter("windy");
+        //int editProjectID = Integer.parseInt(request.getParameter("ProjectEditID"));
+    String editProjectID =request.getParameter("ProjectEditID");
+    if (editProjectID == null){editProjectID="0";}
+    int insertOrEdit = Integer.parseInt(editProjectID);
 
         //setup DB item y or n based on if store items exist
         String storeYn;
@@ -71,22 +80,22 @@ String store = request.getParameter("store");
         dao = new GenericDao(Project.class);
 
         users = userDao.findByPropertyEqual("email",email);
-        Project newProject = new Project( 0, users.get(0), projectName,  day, day, helper, storeYn, "n", "n", "n");
+        Project newProject = new Project( insertOrEdit, users.get(0), projectName,  Wday, Sday, helper, storeYn, in_out, hot_cold, windy);
         users.get(0).addProject(newProject);
         logger.info("is newProject set???  "+newProject);
-        int newProjectID = dao.insert(newProject);
+
+
+       int newProjectID = dao.insert(newProject);
 
         //get back newProject, but now we have project ID.  its project 0 in the list
         List<Project> insertedNewProject = dao.findByPropertyEqual("id",newProjectID);
         //now that project is added we can add store itmes (tied to project)
         //function to turn store string into array, and set
         //each item as its own row in the store DB table
-        logger.info("project we are using to add store items "+insertedNewProject.get(0));
+       // logger.info("project we are using to add store items "+insertedNewProject.get(0));
 
         //if store is empty we set DB to n
-        if (store.length() <1 ){
-            storeYn = "n";
-        } else {
+        if (store.length() >1 ){
             setStoreStringToDB(store,insertedNewProject.get(0));
         }
 

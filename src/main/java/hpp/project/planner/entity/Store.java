@@ -61,10 +61,6 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store{" +
-                "id=" + id +
-                ", project=" + project_id +
-                ", item='" + item + '\'' +
-                '}';
+        return " "+item;
     }
 }

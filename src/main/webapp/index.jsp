@@ -44,7 +44,9 @@
                         <td>${project.getProject_name()} </td>
                         <td>${project.getHelper()} </td>
                         <td>${project.getStore()} </td>
-                        <td><a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a> </td>
+                        <td><a href="projectEdit?projectId=${project.getId()}"/> EDIT </a>
+                            <a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a>
+                        </td>
                     </tr>
 
                 </c:forEach>
