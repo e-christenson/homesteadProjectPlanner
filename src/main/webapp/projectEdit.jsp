@@ -34,10 +34,25 @@
 
             <fieldset class="border border-dark rounded">
             <div class="form-group">
-                <p>Current Items from store: ${storeList}
-                  <a class="nav-link" href="storeList">edit store list page</a></p>
-                        <label for="store">enter additional items</label>
-            <input type="text"  name="store" id="store"/><br />
+
+                <c:choose>
+                    <c:when test="${empty storeList}">
+            <h3>this project has 0 store items </h3>
+                    </c:when>
+                    <c:otherwise>
+                        <p>Current Items from store:</p>
+                        <p>${storeList}</p>
+                        <p> To remove items visit the  <a class="nav-link" href="storeList">Store List Page</a></p>
+                    </c:otherwise>
+                </c:choose>
+
+
+
+                <label for="store">enter additional items</label>
+                <input type="text"  name="store" id="store"/><br />
+
+
+
             </div>
             </fieldset>
 
