@@ -73,6 +73,7 @@
                 <th>Condition</th>
                 <th>High</th>
                 <th>Low</th>
+                <th>MaxWind(0-5)</th>
 
                 </thead>
                 <tbody>
@@ -82,6 +83,7 @@
                     <td>${currentWeather.getDataseries().get(0).getWeather()} </td>
                     <td>${currentWeather.getDataseries().get(0).getTemp2m().getMax()}</td>
                     <td>${currentWeather.getDataseries().get(0).getTemp2m().getMin()}</td>
+                    <td>${currentWeather.getDataseries().get(0).getWind10mMax()}</td>
                 </tr>
 
                 <tr>
@@ -89,6 +91,7 @@
                     <td>${currentWeather.getDataseries().get(1).getWeather()} </td>
                     <td>${currentWeather.getDataseries().get(1).getTemp2m().getMax()}</td>
                     <td>${currentWeather.getDataseries().get(1).getTemp2m().getMin()}</td>
+                    <td>${currentWeather.getDataseries().get(0).getWind10mMax()}</td>
                 </tr>
 
 

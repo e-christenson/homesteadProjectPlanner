@@ -40,11 +40,11 @@
                 <th>Action</th>
                 <th>Helper?</th>
                 <th>Store Items</th>
-                <th>Inside</th>
+                <th>Windy/Calm</th>
 
                 </thead>
                 <tbody>
-                <c:forEach var="project" items="${projects}">
+                <c:forEach var="project" items="${fProjects}">
                     <tr>
                         <td>${project.project_name} </td>
                         <td>${project.date} </td>
@@ -53,7 +53,7 @@
                         </td>
                         <td>${project.helper} </td>
                         <td>${project.getStore()} </td>
-                        <td>${project.in_out} </td>
+                        <td>${project.windy} </td>
 
                     </tr>
 
