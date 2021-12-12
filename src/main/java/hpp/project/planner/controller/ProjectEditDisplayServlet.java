@@ -51,7 +51,7 @@ public class ProjectEditDisplayServlet extends HttpServlet {
         Project projectEdit = (Project) pDao.getById(Integer.parseInt(projectId));
         List<Store> stores = sDao.findByPropertyEqual("project_id", projectEdit.getId());
 
-            request.setAttribute("projectEdit", projectEdit);
+            ses.setAttribute("projectEdit", projectEdit);
             request.setAttribute("storeList", stores);
 
             String url = "/projectEdit.jsp";

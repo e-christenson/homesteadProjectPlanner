@@ -29,11 +29,11 @@ import java.util.List;
 public class ProjectAddActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
-    GenericDao dao;
-    //GenericDao userDao;
-   // List<Project> projects;
-    //List<User> users;
+    //GenericDao dao;
     User loggedInUser;
+    int newProjectID;
+    GenericDao dao = new GenericDao(Project.class);
+
 
 
     /**
@@ -47,75 +47,65 @@ public class ProjectAddActionServlet extends HttpServlet {
      */
 
 
-
     public void doPost (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        loggedInUser = (User) request.getSession().getAttribute("cognitoUser");
         //info in from web form
-        //String email = request.getParameter("email");
+
     String helper = request.getParameter("helper");
     String store = request.getParameter("store");
+    String storeFlag = null;
+        if (store.length() > 1){storeFlag = "y";}
+
         String  projectName = request.getParameter("projectName");
-        //String  day = request.getParameter("day");
         String  Wday = request.getParameter("Wday");
         String  Sday = request.getParameter("Sday");
         String  in_out = request.getParameter("in_out");
         String  hot_cold = request.getParameter("hot_cold");
         String  windy = request.getParameter("windy");
-        //int editProjectID = Integer.parseInt(request.getParameter("ProjectEditID"));
-    String editProjectID =request.getParameter("ProjectEditID");
-    if (editProjectID == null){editProjectID="0";}
-    int insertOrEdit = Integer.parseInt(editProjectID);
+        String editProjectID =request.getParameter("projectEditID");
+        //need this above in int, but could be null
+        if (editProjectID == null){editProjectID="0";}
+        int editOrUpdate = Integer.parseInt(editProjectID);
 
-        //setup DB item y or n based on if store items exist
-        String storeYn;
+        //is this a new project or an edit.  hew=0 project id bc it auto indexes that column
+       // if (editProjectID == null){editProjectID="0";}
+    //int insertOrEdit = Integer.parseInt(editProjectID);
+
+        //setup DB flag y or n based on if store items exist
+
         logger.info("STORE ITEM LIST LENGTH "+store.length());
-        if (store.length() == 0){
-            storeYn="n";
-        }else {
-            storeYn="y";};
 
 
 
-       // userDao = new GenericDao(User.class);
-        dao = new GenericDao(Project.class);
-
-        //users = userDao.findByPropertyEqual("email",email);
-        loggedInUser = (User) request.getSession().getAttribute("cognitoUser");
-
-        Project newProject = new Project( insertOrEdit, loggedInUser, projectName,  Wday, Sday, helper, storeYn, in_out, hot_cold, windy);
+        Project newProject = new Project( editOrUpdate, loggedInUser, projectName,  Wday, Sday, helper, storeFlag, in_out, hot_cold, windy);
         loggedInUser.addProject(newProject);
         logger.info("is newProject set???  "+newProject);
 
+        //new projects will have null editProjectID
+        //newe gets inserted, existing gets updated
+        //updated projects set newProjectID = for store list update/edit
+if (editOrUpdate == 0){
+     editOrUpdate = dao.insert(newProject);
+    } else {
+ dao.saveOrUpdate(newProject);
 
-       int newProjectID = dao.insert(newProject);
+}
 
-        //get back newProject, but now we have project ID.  its project 0 in the list
-        //List<Project> insertedNewProject = dao.findByPropertyEqual("id",newProjectID);
-        //now that project is added we can add store itmes (tied to project)
-        //function to turn store string into array, and set
-        //each item as its own row in the store DB table
-       // logger.info("project we are using to add store items "+insertedNewProject.get(0));
 
-        //if store is empty we set DB to n
+
+
+       //int newProjectID = dao.insert(newProject);
+
+
+        //if store contains items, now we have project ID we can insert them
         if (store.length() >1 ){
-            setStoreStringToDB(store,newProjectID);
+            setStoreStringToDB(store,editOrUpdate);
         }
 
 
-
-
-
-
-        //get all projects for user and add into session
-//projects = dao.findByPropertyEqual("user",loggedInUser.getId());
-//request.getSession().setAttribute("projects",projects);
-
         String url = "/index";
-
-        //testing sc / el
         request.setAttribute("url",url);
-        //response.sendRedirect(request.getContextPath()+url);
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request,response);
     }

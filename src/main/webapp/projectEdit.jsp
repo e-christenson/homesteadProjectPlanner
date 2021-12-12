@@ -17,8 +17,9 @@
 
         <form action="HPPaddProject" method="POST" class="mx-auto border">
             <p>User : ${cognitoUser.name}</p>
+            <p>ID of project : ${projectEdit.id}</p>
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
-            <input type="hidden" name="projectEditID" id="projectEditID" value="${cognitoUser.id}"/><br />
+            <input type="hidden" name="projectEditID" id="projectEditID" value="${projectEdit.id}"/><br />
 
 
 
