@@ -7,6 +7,8 @@ import hpp.project.planner.test.util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -73,9 +75,9 @@ class ProjectTest {
      */
     @Test
     void insertNewProject() {
-
+        //LocalDate date = new LocalDate.now();
         users = userDao.findByPropertyEqual("email","bob@email.com");
-        Project newProject = new Project( 5, users.get(0), "burn the brush pile",  "y", "y", "y", "y", "y", "y", "y");
+        Project newProject = new Project( 5, users.get(0), "burn the brush pile", null, "y", "y", "y", "y", "y", "y","w" ,0);
     users.get(0).addProject(newProject);
     int id = dao.insert(newProject);
     Project projectWeJustAdded = (Project) dao.getById(id);

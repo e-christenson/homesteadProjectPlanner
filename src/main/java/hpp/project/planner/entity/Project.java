@@ -3,6 +3,7 @@ package hpp.project.planner.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class Project {
 
 
     private String project_name;
+    private LocalDate date;
     private String mon_fri;
     private String sat_sun;
     private String helper;
@@ -33,15 +35,17 @@ public class Project {
     private String in_out;
     private String hot_cold;
     private String windy;
+    private int weather_score;
 
     //@OneToMany(mappedBy = "parent_project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
    // private List<Store> stores;
 
 
-    public Project(int id, User user, String project_name, String mon_fri, String sat_sun, String helper, String store, String in_out, String hot_cold, String windy) {
+    public Project(int id, User user, String project_name, LocalDate date, String mon_fri, String sat_sun, String helper, String store, String in_out, String hot_cold, String windy, int weather_score) {
         this.id = id;
         this.user = user;
         this.project_name = project_name;
+        this.date = date;
         this.mon_fri = mon_fri;
         this.sat_sun = sat_sun;
         this.helper = helper;
@@ -49,6 +53,7 @@ public class Project {
         this.in_out = in_out;
         this.hot_cold = hot_cold;
         this.windy = windy;
+        this.weather_score = weather_score;
     }
 
     public int getId() {
@@ -130,7 +135,24 @@ public class Project {
     public void setWindy(String windy) {
         this.windy = windy;
     }
-/*
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getWeather_score() {
+        return weather_score;
+    }
+
+    public void setWeather_score(int weather_score) {
+        this.weather_score = weather_score;
+    }
+
+    /*
     public List<Store> getStores() {
         return stores;
     }
@@ -162,6 +184,7 @@ public class Project {
                 "id=" + id +
                 ", user=" + user +
                 ", project_name='" + project_name + '\'' +
+                ", date=" + date +
                 ", mon_fri='" + mon_fri + '\'' +
                 ", sat_sun='" + sat_sun + '\'' +
                 ", helper='" + helper + '\'' +
@@ -169,6 +192,7 @@ public class Project {
                 ", in_out='" + in_out + '\'' +
                 ", hot_cold='" + hot_cold + '\'' +
                 ", windy='" + windy + '\'' +
+                ", weather_score=" + weather_score +
                 '}';
     }
 }

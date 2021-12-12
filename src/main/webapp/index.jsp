@@ -28,35 +28,32 @@
 
 
             <h3> ${cognitoUser.name}'s Projects</h3>
+                <p>A listing of all of your Homestead's projects.  You can click on the column header
+                to sort by field type. Projects can be edited or deleted by clicking on the action column links.</p>
 
-                <table id="ProjectsTable" class="display">
+            <table id="ProjectsTable" class="display table table-bordered table-striped">
                 <thead class="thead-dark">
 
                 <th>Name</th>
-                <th>Helper</th>
-                <th>Items from Store</th>
-                <th>Mon|FriF</th>
-                <th>Weekend</th>
+                <th>Date</th>
+                <th>Action</th>
+                <th>Helper?</th>
+                <th>Store Items</th>
                 <th>Inside</th>
-                <th>Hot|Cold</th>
-                <th>Windy|Calm</th>
-                <th>Actions</th>
 
                 </thead>
                 <tbody>
                 <c:forEach var="project" items="${projects}">
                     <tr>
-                        <td>${project.getProject_name()} </td>
-                        <td>${project.getHelper()} </td>
-                        <td>${project.getStore()} </td>
-                        <td>${project.mon_fri} </td>
-                        <td>${project.sat_sun} </td>
-                        <td>${project.in_out} </td>
-                        <td>${project.hot_cold} </td>
-                        <td>${project.windy} </td>
-                        <td><a href="projectEdit?projectId=${project.getId()}"/> EDIT  </a>
-                            <a href="HPPdeleteProject?projectId=${project.getId()}"/>  DELETE </a>
+                        <td>${project.project_name} </td>
+                        <td>${project.date} </td>
+                        <td><a href="projectEdit?projectId=${project.getId()}" class="text-success" mx-2/>Edit</a>
+                            <a href="HPPdeleteProject?projectId=${project.getId()}" class="text-danger px-2"/> Del </a>
                         </td>
+                        <td>${project.helper} </td>
+                        <td>${project.getStore()} </td>
+                        <td>${project.in_out} </td>
+
                     </tr>
 
                 </c:forEach>

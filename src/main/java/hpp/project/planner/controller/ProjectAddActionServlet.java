@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class ProjectAddActionServlet extends HttpServlet {
     User loggedInUser;
     int newProjectID;
     GenericDao dao = new GenericDao(Project.class);
+    LocalDate date;
 
 
 
@@ -65,8 +67,16 @@ public class ProjectAddActionServlet extends HttpServlet {
         String  windy = request.getParameter("windy");
         String editProjectID =request.getParameter("projectEditID");
         //need this above in int, but could be null
-        if (editProjectID == null){editProjectID="0";}
-        int editOrUpdate = Integer.parseInt(editProjectID);
+        if (editProjectID == null){
+            editProjectID="0";
+            date = LocalDate.now();
+        } else {
+            date = LocalDate.parse(request.getParameter("date"));
+        }
+        int editOrUpdateID = Integer.parseInt(editProjectID);
+
+
+
 
         //is this a new project or an edit.  hew=0 project id bc it auto indexes that column
        // if (editProjectID == null){editProjectID="0";}
@@ -78,15 +88,15 @@ public class ProjectAddActionServlet extends HttpServlet {
 
 
 
-        Project newProject = new Project( editOrUpdate, loggedInUser, projectName,  Wday, Sday, helper, storeFlag, in_out, hot_cold, windy);
+        Project newProject = new Project( editOrUpdateID, loggedInUser, projectName, date, Wday, Sday, helper, storeFlag, in_out, hot_cold, windy,0);
         loggedInUser.addProject(newProject);
         logger.info("is newProject set???  "+newProject);
 
         //new projects will have null editProjectID
         //newe gets inserted, existing gets updated
         //updated projects set newProjectID = for store list update/edit
-if (editOrUpdate == 0){
-     editOrUpdate = dao.insert(newProject);
+if (editOrUpdateID == 0){
+     editOrUpdateID = dao.insert(newProject);
     } else {
  dao.saveOrUpdate(newProject);
 
@@ -100,7 +110,7 @@ if (editOrUpdate == 0){
 
         //if store contains items, now we have project ID we can insert them
         if (store.length() >1 ){
-            setStoreStringToDB(store,editOrUpdate);
+            setStoreStringToDB(store,editOrUpdateID);
         }
 
 

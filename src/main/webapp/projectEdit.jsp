@@ -20,6 +20,7 @@
             <p>ID of project : ${projectEdit.id}</p>
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
             <input type="hidden" name="projectEditID" id="projectEditID" value="${projectEdit.id}"/><br />
+            <input type="hidden" name="date" id="date" value="${projectEdit.date}"/><br />
 
 
 
