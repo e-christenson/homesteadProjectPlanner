@@ -45,6 +45,9 @@ public class FilteredProjectListServlet extends HttpServlet {
             User cognitoUser = (User) ses.getAttribute("cognitoUser");
 
 
+
+
+
             String url = "/filteredProjects.jsp";
 
 
