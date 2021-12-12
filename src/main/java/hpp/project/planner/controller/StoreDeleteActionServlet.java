@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,16 +32,24 @@ import java.util.List;
 public class StoreDeleteActionServlet extends HttpServlet {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
+    List<Store> stores = new ArrayList<>();
+    int projectId;
     GenericDao sDao = new GenericDao(Store.class);
-
+    GenericDao pDao = new GenericDao(Project.class);
+    User loggedInUser;
 
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
+        loggedInUser = (User) request.getSession().getAttribute("cognitoUser");
+
         int Id = Integer.parseInt(request.getParameter("Id"));
         Store store = (Store) sDao.getById(Id);
+         projectId = store.getProject();
+
+
         //user can have a stale page on browser, so if we come into this
         //servlet w/o session data we skip the delete and go to login screen
         if (store != null){
@@ -48,6 +57,11 @@ public class StoreDeleteActionServlet extends HttpServlet {
             sDao.delete(store);
         }
 
+        //function to check if store is empty for a particular
+        //project and then set flag in project table
+        stores = sDao.findByPropertyEqual("project_id", Id);
+        System.out.println("storeLength ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+stores.size());
+        checkStoreFlag(stores, loggedInUser);
 
 
 
@@ -64,7 +78,17 @@ public class StoreDeleteActionServlet extends HttpServlet {
 
     }
 
+private void checkStoreFlag(List<Store> stores,User loggedInUser){
 
+        if (stores.size() == 0){
+            Project project = (Project) pDao.getById(projectId);
+            project.setStore("");
+            loggedInUser.addProject(project);
+            pDao.saveOrUpdate(project);
+
+        }
+
+}
 
 
 
