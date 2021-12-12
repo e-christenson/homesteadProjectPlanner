@@ -1,7 +1,7 @@
-package matc.controller;
+package hpp.matc.controller;
 
 
-import matc.util.PropertiesLoader;
+import hpp.matc.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

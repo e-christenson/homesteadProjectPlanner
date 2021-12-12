@@ -1,4 +1,4 @@
-package matc.util;
+package hpp.matc.util;
 
 import java.io.IOException;
 import java.util.Properties;

@@ -1,4 +1,4 @@
-package matc.auth;
+package hpp.matc.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

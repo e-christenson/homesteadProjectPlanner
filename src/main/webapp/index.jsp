@@ -13,7 +13,7 @@
 
 </script>
 <body>
-<main class="container bg-light">
+<main class="container-fluid bg-light">
     <jsp:include page="header.jsp" />
     <jsp:include page="navigation.jsp" />
 
@@ -35,6 +35,11 @@
                 <th>Name</th>
                 <th>Helper</th>
                 <th>Items from Store</th>
+                <th>Mon|FriF</th>
+                <th>Weekend</th>
+                <th>Inside</th>
+                <th>Hot|Cold</th>
+                <th>Windy|Calm</th>
                 <th>Actions</th>
 
                 </thead>
@@ -44,8 +49,13 @@
                         <td>${project.getProject_name()} </td>
                         <td>${project.getHelper()} </td>
                         <td>${project.getStore()} </td>
-                        <td><a href="projectEdit?projectId=${project.getId()}"/> EDIT </a>
-                            <a href="HPPdeleteProject?projectId=${project.getId()}"/> DELETE </a>
+                        <td>${project.mon_fri} </td>
+                        <td>${project.sat_sun} </td>
+                        <td>${project.in_out} </td>
+                        <td>${project.hot_cold} </td>
+                        <td>${project.windy} </td>
+                        <td><a href="projectEdit?projectId=${project.getId()}"/> EDIT  </a>
+                            <a href="HPPdeleteProject?projectId=${project.getId()}"/>  DELETE </a>
                         </td>
                     </tr>
 
