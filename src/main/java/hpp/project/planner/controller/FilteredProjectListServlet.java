@@ -22,8 +22,8 @@ import java.util.List;
  *@author    EChristenson
  */
 @WebServlet(
-        name = "storeList",
-        urlPatterns = { "/storeList" }
+        name = "fProjects",
+        urlPatterns = { "/fProjects" }
 )
 public class FilteredProjectListServlet extends HttpServlet {
 
@@ -43,17 +43,9 @@ public class FilteredProjectListServlet extends HttpServlet {
 
             HttpSession ses= request.getSession();
             User cognitoUser = (User) ses.getAttribute("cognitoUser");
-            GenericDao sDao = new GenericDao(Store.class);
-
-            if (cognitoUser != null) {
-               
-                List<Store> storeL = sDao.findByPropertyEqual("user_id", cognitoUser.getId());
-
-                request.setAttribute("storeList", storeL);
-            }
 
 
-            String url = "/storeList.jsp";
+            String url = "/filteredProjects.jsp";
 
 
 
