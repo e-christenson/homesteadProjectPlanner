@@ -32,7 +32,7 @@
                 if you project has a flag "weekend", and today is Monday, that project is not shown.
                 Other factors to remove projects are temperature and wind </p>
 
-            <table id="ProjectsTable" class="display table table-bordered table-striped">
+            <table id="ProjectsTable" class="display table table-sm table-bordered table-striped mx-1">
                 <thead class="thead-dark">
 
                 <th>Name</th>
