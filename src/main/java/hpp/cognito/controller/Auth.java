@@ -1,4 +1,4 @@
-package hpp.matc.controller;
+package hpp.cognito.controller;
 
 
 import com.auth0.jwt.JWT;
@@ -10,8 +10,8 @@ import hpp.project.planner.com.zipCode.Weather;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import hpp.project.planner.persistence.WeatherApiDao;
-import hpp.matc.auth.*;
-import hpp.matc.util.PropertiesLoader;
+import hpp.cognito.auth.*;
+import hpp.cognito.util.PropertiesLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

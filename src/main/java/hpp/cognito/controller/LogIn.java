@@ -1,7 +1,7 @@
-package hpp.matc.controller;
+package hpp.cognito.controller;
 
 
-import hpp.matc.util.PropertiesLoader;
+import hpp.cognito.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -165,7 +165,7 @@
                         </c:when>
                         <c:otherwise>
 
-                            <input type="radio" value="c" id="wind" name="windy"  >
+                            <input type="radio" value="w" id="wind" name="windy"  >
                             <label for="wind">Windy Day</label>
 
                         </c:otherwise>

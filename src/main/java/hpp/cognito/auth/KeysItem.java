@@ -1,4 +1,4 @@
-package hpp.matc.auth;
+package hpp.cognito.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

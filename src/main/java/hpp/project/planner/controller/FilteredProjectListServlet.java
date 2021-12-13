@@ -31,10 +31,11 @@ import java.util.List;
         urlPatterns = { "/fProjects" }
 )
 public class FilteredProjectListServlet extends HttpServlet {
+    private final Logger logger = LogManager.getLogger(this.getClass());
 List<Project> projects = new ArrayList<>();
     List<Project> fProjects = new ArrayList<>();
 Weather weather;
-    private final Logger logger = LogManager.getLogger(this.getClass());
+
     /**
      *
      *  Handles HTTP GET requests.
@@ -46,17 +47,20 @@ Weather weather;
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        logger.info("FilterProjectListServlet inside GET");
             HttpSession ses= request.getSession();
             User cognitoUser = (User) ses.getAttribute("cognitoUser");
             projects = (List<Project>) ses.getAttribute("projects");
             weather = (Weather) ses.getAttribute("currentWeather");
+            fProjects.clear();
 
 
 //function to loop through projects in session, pull non-match, return list projects
-        fProjects = removeByWind(projects,weather);
+        removeByWind(projects,weather);
 
-ses.setAttribute("fProjects", fProjects);
+request.setAttribute("fProjects", fProjects);
+//clear the list after we set it
+
 
             String url = "/filteredProjects.jsp";
 
@@ -68,23 +72,38 @@ ses.setAttribute("fProjects", fProjects);
 
     }
 
-    private List<Project> removeByWind(List<Project> projects, Weather weather) {
+    private void removeByWind(List<Project> projects, Weather weather) {
 
-        //if we have high wind, remove projects flagged for calm wind
+        logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
+        //loop through projects, push all BUT calm wind projects to fProjects
+        // wind10Max above 2 is high winde
         if (weather.getDataseries().get(0).getWind10mMax() > 2) {
+            sendProjects(projects);
 
-            for (Project project : projects) {
-
-                if (project.getWindy() == "c") {
-                    logger.info("matching CCCCCCCCCCCCCCCC wind");
-                  System.out.println("CCC size of ProjectList before remove"+projects.size());
-                    projects.remove(this);
-                    System.out.println("CCC size of ProjectList after remove"+projects.size());
-                }
-
-            }
         }
-        return projects;
+    }
+
+
+    private void sendProjects(List<Project> projects){
+        for (Project project : projects) {
+            //inside loop, checking each project
+
+            if (project.getWindy() == null) {
+                fProjects.add(project);
+                logger.info("null MATCH added to fProjects" + fProjects.size());
+
+            } else {
+                if (!project.getWindy().equals("c")) {
+
+                    fProjects.add(project);
+                    logger.info("not c MATCH added to fProjects" + fProjects.size());
+                }
+            }
+
+
+        }
+
+
     }
 
 
