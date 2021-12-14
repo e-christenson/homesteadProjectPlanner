@@ -50,7 +50,7 @@ public class UserProjectLoaderServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
         loggedInUser = (User) ses.getAttribute("cognitoUser");
-
+projects.clear();
 //call with user to get projects
             projects = getProjectsFromUser(loggedInUser);
             ses.setAttribute("projects", projects);

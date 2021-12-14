@@ -82,7 +82,7 @@ private void checkStoreFlag(List<Store> stores,User loggedInUser){
 
         if (stores.size() == 0){
             Project project = (Project) pDao.getById(projectId);
-            project.setStore("");
+            project.setStore(null);
             loggedInUser.addProject(project);
             pDao.saveOrUpdate(project);
 

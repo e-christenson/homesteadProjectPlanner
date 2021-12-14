@@ -1,4 +1,4 @@
-package hpp.matc.util;
+package hpp.cognito.util;
 
 import java.io.IOException;
 import java.util.Properties;

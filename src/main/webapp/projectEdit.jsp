@@ -26,7 +26,10 @@
 
             <div class="form-group">
             <label for="projectName">Project Name</label>
-            <input type="text" value="${projectEdit.project_name} " name="projectName" id="projectName"/><br />
+
+                <input type="text" value="${projectEdit.project_name} " name="projectName" id="projectName" class="form-control" pattern="[a-zA-z\d][^{}]{1,40}" required /><br />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Something isn't right. up to 40 characters, letters numbers ok, no {} allowed </div>
             </div>
 
             <div class="form-group">
@@ -165,7 +168,7 @@
                         </c:when>
                         <c:otherwise>
 
-                            <input type="radio" value="c" id="wind" name="windy"  >
+                            <input type="radio" value="w" id="wind" name="windy"  >
                             <label for="wind">Windy Day</label>
 
                         </c:otherwise>
@@ -205,6 +208,10 @@
 
 
 </div>
+    <script src="javascript/formValidation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
 </main>
 
 </body>

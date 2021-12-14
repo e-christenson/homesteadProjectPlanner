@@ -15,22 +15,29 @@
 
 <div class="row text-center">
 
-        <form action="HPPaddProject" method="POST" class="mx-auto border">
+        <form action="HPPaddProject" method="POST" class="mx-auto border needs-validation" novalidate>
             <p>User : ${cognitoUser.name}</p>
             <input type="hidden" name="email" id="email" value="${cognitoUser.email}"/><br />
 
             <div class="form-group">
-            <label for="projectName">Project Name</label>
-            <input type="text" name="projectName" id="projectName"/><br />
+            <label for="projectName" class="form-label">Project Name (required)</label>
+            <input type="text" name="projectName" id="projectName" class="form-control" pattern="[a-zA-z\d][^{}]{1,40}" required /><br />
+
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Something isn't right. up to 40 characters, letters numbers ok, no {} allowed </div>
+
             </div>
 
             <div class="form-group">
             <label for="helper">Project Helper Name</label>
-            <input type="text" name="helper" id="helper"/><br />
+            <input type="text" name="helper" id="helper" class="form-control" pattern="[a-zA-z\d][^{}]{1,40}"/><br />
+
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Something isn't right. up to 40 characters, letters numbers ok, no {} allowed </div>
             </div>
 
             <div class="form-group">
-            <label for="store">Items needed from Store</label>
+            <label for="store">Items needed from Store with a space between them (space=new item)</label>
             <input type="text" name="store" id="store"/><br />
             </div>
 
@@ -105,6 +112,11 @@
 
 
 </div>
+    <script src="javascript/formValidation.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
 </main>
 
 </body>
