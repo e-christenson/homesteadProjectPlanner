@@ -32,9 +32,14 @@ import java.util.List;
 )
 public class FilteredProjectListServlet extends HttpServlet {
     private final Logger logger = LogManager.getLogger(this.getClass());
-List<Project> projects = new ArrayList<>();
-    List<Project> wProjects = new ArrayList<>();
+List<Project> allProjects = new ArrayList<>();
     //project list with wind match removed
+List<Project> wProjects = new ArrayList<>();
+
+    //project list with hot match removed
+    List<Project> hProjects = new ArrayList<>();
+
+    //project list with cold match removed
     List<Project> fProjects = new ArrayList<>();
 Weather weather;
 
@@ -44,6 +49,9 @@ Weather weather;
 
     //hot cutoff.  above 75 is hot
     int hot = 75;
+
+    int cold = 32;
+
 
     /**
      *
@@ -56,21 +64,33 @@ Weather weather;
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int removedWind;
+        int removedHot;
+        int removedCold;
+
         logger.info("FilterProjectListServlet inside GET");
             HttpSession ses= request.getSession();
             User cognitoUser = (User) ses.getAttribute("cognitoUser");
-            projects = (List<Project>) ses.getAttribute("projects");
+            allProjects = (List<Project>) ses.getAttribute("projects");
 
             weather = (Weather) ses.getAttribute("currentWeather");
             fProjects.clear();
             wProjects.clear();
+            hProjects.clear();
 
 
 //function to loop through projects in session, pull non-match, return list projects
-        removeByWind(projects,weather);
+        removeByWind(allProjects,weather);
+        removedWind = allProjects.size()-wProjects.size();
         removeByHot(wProjects,weather);
+        removedHot = wProjects.size()-hProjects.size();
+        removeByCold(hProjects,weather);
+        removedCold = hProjects.size()-fProjects.size();
 
 request.setAttribute("fProjects", fProjects);
+request.setAttribute("removedWind", removedWind);
+        request.setAttribute("removedHot", removedHot);
+        request.setAttribute("removedCold", removedCold);
 //clear the list after we set it
 
 
@@ -102,6 +122,8 @@ request.setAttribute("fProjects", fProjects);
                     }
                 }
             }
+        } else {
+            wProjects = projects;
         }
     }
 
@@ -116,21 +138,46 @@ request.setAttribute("fProjects", fProjects);
             //sendProjects(projects);
             for (Project project : projects) {
                 if (project.getHot_cold() == null) {
-                    fProjects.add(project);
+                    hProjects.add(project);
                     logger.info("null MATCH in remHOt added to fProjects" + fProjects.size());
 
                 } else {
                     if (!project.getHot_cold().equals("h")) {
 
-                        fProjects.add(project);
+                        hProjects.add(project);
                         logger.info("not hot MATCH added to fProjects" + fProjects.size());
                     }
                 }
             }
+        } else {
+            hProjects = projects;
         }
     }
 
+    private void removeByCold(List<Project> projects, Weather weather) {
 
+        logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
+        //loop through projects, push all BUT calm wind projects to fProjects
+        // wind10Max above 2 is high winde
+        if (weather.getDataseries().get(0).getTemp2m().getMin() > cold) {
+            //sendProjects(projects);
+            for (Project project : projects) {
+                if (project.getHot_cold() == null) {
+                    fProjects.add(project);
+                    logger.info("null MATCH in remCold added to fProjects" + fProjects.size());
+
+                } else {
+                    if (!project.getHot_cold().equals("c")) {
+
+                        fProjects.add(project);
+                        logger.info("not cold MATCH added to fProjects" + fProjects.size());
+                    }
+                }
+            }
+        } else {
+            fProjects = projects;
+        }
+    }
 
 
 
