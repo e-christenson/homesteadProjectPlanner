@@ -33,8 +33,17 @@ import java.util.List;
 public class FilteredProjectListServlet extends HttpServlet {
     private final Logger logger = LogManager.getLogger(this.getClass());
 List<Project> projects = new ArrayList<>();
+    List<Project> wProjects = new ArrayList<>();
+    //project list with wind match removed
     List<Project> fProjects = new ArrayList<>();
 Weather weather;
+
+//wind score we use as cutoff for filtering
+
+    int wind = 2;
+
+    //hot cutoff.  above 75 is hot
+    int hot = 75;
 
     /**
      *
@@ -51,20 +60,21 @@ Weather weather;
             HttpSession ses= request.getSession();
             User cognitoUser = (User) ses.getAttribute("cognitoUser");
             projects = (List<Project>) ses.getAttribute("projects");
+
             weather = (Weather) ses.getAttribute("currentWeather");
             fProjects.clear();
+            wProjects.clear();
 
 
 //function to loop through projects in session, pull non-match, return list projects
         removeByWind(projects,weather);
+        removeByHot(wProjects,weather);
 
 request.setAttribute("fProjects", fProjects);
 //clear the list after we set it
 
 
             String url = "/filteredProjects.jsp";
-
-
 
 
         RequestDispatcher  dispatcher = getServletContext().getRequestDispatcher(url);
@@ -77,23 +87,50 @@ request.setAttribute("fProjects", fProjects);
         logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
         //loop through projects, push all BUT calm wind projects to fProjects
         // wind10Max above 2 is high winde
-        if (weather.getDataseries().get(0).getWind10mMax() > 2) {
+        if (weather.getDataseries().get(0).getWind10mMax() > wind) {
             //sendProjects(projects);
             for (Project project : projects) {
                 if (project.getWindy() == null) {
-                    fProjects.add(project);
+                    wProjects.add(project);
                     logger.info("null MATCH added to fProjects" + fProjects.size());
 
                 } else {
                     if (!project.getWindy().equals("c")) {
 
-                        fProjects.add(project);
+                        wProjects.add(project);
                         logger.info("not c MATCH added to fProjects" + fProjects.size());
                     }
                 }
             }
         }
     }
+
+
+
+    private void removeByHot(List<Project> projects, Weather weather) {
+
+        logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
+        //loop through projects, push all BUT calm wind projects to fProjects
+        // wind10Max above 2 is high winde
+        if (weather.getDataseries().get(0).getTemp2m().getMax() < hot) {
+            //sendProjects(projects);
+            for (Project project : projects) {
+                if (project.getHot_cold() == null) {
+                    fProjects.add(project);
+                    logger.info("null MATCH in remHOt added to fProjects" + fProjects.size());
+
+                } else {
+                    if (!project.getHot_cold().equals("h")) {
+
+                        fProjects.add(project);
+                        logger.info("not hot MATCH added to fProjects" + fProjects.size());
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 
