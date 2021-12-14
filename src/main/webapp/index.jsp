@@ -36,24 +36,37 @@
 
                 <th>Name</th>
                 <th>Date</th>
-                <th>Action</th>
-                <th>Helper?</th>
-                <th>Store Items</th>
                 <th>Conditions</th>
-
+                <th>Action</th>
                 </thead>
                 <tbody>
                 <c:forEach var="project" items="${projects}">
                     <tr>
                         <td>${project.project_name} </td>
                         <td>${project.date} </td>
-                        <td><a href="projectEdit?projectId=${project.getId()}" class="text-success" mx-2/>Edit</a>
-                            <a href="HPPdeleteProject?projectId=${project.getId()}" class="text-danger px-2"/> Del </a>
-                        </td>
-                        <td>${project.helper} </td>
-                        <td>${project.getStore()} </td>
+
                         <td>
                             <div class="row mx-3">
+
+                                <c:choose>
+                                    <c:when test="${empty project.helper}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="images/helper.png"  width="25" height="25" alt="w">
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <c:choose>
+                                    <c:when test="${empty project.store}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="images/store.png"  width="25" height="25" alt="w">
+                                    </c:otherwise>
+                                </c:choose>
+
+
                                 <c:choose>
                                     <c:when test="${project.in_out =='i'}">
                                         <img src="images/atHome.png"  width="25" height="25" alt="w">
@@ -93,7 +106,9 @@
                                 </c:choose>
                             </div>
                         </td>
-
+                        <td><a href="projectEdit?projectId=${project.getId()}" class="text-success" mx-2/>Edit</a>
+                            <a href="HPPdeleteProject?projectId=${project.getId()}" class="text-danger px-2"/> Del </a>
+                        </td>
                     </tr>
 
                 </c:forEach>
