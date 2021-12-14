@@ -39,7 +39,7 @@
                 <th>Action</th>
                 <th>Helper?</th>
                 <th>Store Items</th>
-                <th>Inside</th>
+                <th>Conditions</th>
 
                 </thead>
                 <tbody>
@@ -52,7 +52,47 @@
                         </td>
                         <td>${project.helper} </td>
                         <td>${project.getStore()} </td>
-                        <td>${project.in_out} </td>
+                        <td>
+                            <div class="row mx-3">
+                                <c:choose>
+                                    <c:when test="${project.in_out =='i'}">
+                                        <img src="images/atHome.png"  width="25" height="25" alt="w">
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
+                            <c:choose>
+                                <c:when test="${project.windy =='w'}">
+                                    <img src="images/windy.png"  width="25" height="25" alt="w">
+                                </c:when>
+                                <c:otherwise>
+                                </c:otherwise>
+                            </c:choose>
+                                <c:choose>
+                                <c:when test="${project.windy =='c'}">
+                                    <img src="images/calm.png"  width="25" height="25"  alt="w">
+                                </c:when>
+                                <c:otherwise>
+                                </c:otherwise>
+                                </c:choose>
+
+                                <c:choose>
+                                    <c:when test="${project.hot_cold =='h'}">
+                                        <img src="images/hot.png"  width="25" height="25"  alt="w">
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <c:choose>
+                                    <c:when test="${project.hot_cold =='c'}">
+                                        <img src="images/cold.png"  width="25" height="25"  alt="w">
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </td>
 
                     </tr>
 

@@ -78,33 +78,23 @@ request.setAttribute("fProjects", fProjects);
         //loop through projects, push all BUT calm wind projects to fProjects
         // wind10Max above 2 is high winde
         if (weather.getDataseries().get(0).getWind10mMax() > 2) {
-            sendProjects(projects);
-
-        }
-    }
-
-
-    private void sendProjects(List<Project> projects){
-        for (Project project : projects) {
-            //inside loop, checking each project
-
-            if (project.getWindy() == null) {
-                fProjects.add(project);
-                logger.info("null MATCH added to fProjects" + fProjects.size());
-
-            } else {
-                if (!project.getWindy().equals("c")) {
-
+            //sendProjects(projects);
+            for (Project project : projects) {
+                if (project.getWindy() == null) {
                     fProjects.add(project);
-                    logger.info("not c MATCH added to fProjects" + fProjects.size());
+                    logger.info("null MATCH added to fProjects" + fProjects.size());
+
+                } else {
+                    if (!project.getWindy().equals("c")) {
+
+                        fProjects.add(project);
+                        logger.info("not c MATCH added to fProjects" + fProjects.size());
+                    }
                 }
             }
-
-
         }
-
-
     }
+
 
 
 
