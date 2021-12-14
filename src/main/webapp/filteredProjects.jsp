@@ -30,24 +30,25 @@
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Removed due to high wind
-                        <span class="badge bg-primary rounded-pill">${removedWind}</span>
+                        <span class="badge bg-primary text-white rounded-pill">${removedWind}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Removed because its not hot enough
-                        <span class="badge bg-primary rounded-pill">${removedHot}</span>
+                        <span class="badge bg-primary text-white rounded-pill">${removedHot}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Removed because its not cold enough
-                        <span class="badge bg-primary rounded-pill">${removedCold}</span>
+                        <span class="badge bg-primary text-white rounded-pill">${removedCold}</span>
                     </li>
                 </ul>
     </div>
+    </article>
 
           <div class="row">
 
+<div class="table-responsive">
 
-
-                <table id="ProjectsTable" class="display table table-responsive table-bordered table-striped mx-3 mx-auto">
+                <table id="ProjectsTable" class="display table  table-bordered table-striped mx-3 mx-auto">
                     <thead class="thead-dark">
 
                     <th>Name</th>
@@ -144,8 +145,60 @@
                     </c:forEach>
                     </tbody>
                 </table>
+</div>
+
+
+    </div>
+
+    <div class="row">
+        <article class="col-md-6 text-center mx-2 my-auto">
+            <img src="images/weatherMap.jpg" class="img-fluid" alt="weatherIcon">
+            <h3>Weather for ZIP: ${cognitoUser.zip_code}</h3>
+
+            <table id="weatherTable" class="table table-sm">
+                <thead class="thead-success">
+
+                <th>Day</th>
+                <th>Condition</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Wind(0-5)</th>
+
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>Today</td>
+                    <td>${currentWeather.getDataseries().get(0).getWeather()} </td>
+                    <td>${currentWeather.getDataseries().get(0).getTemp2m().getMax()}</td>
+                    <td>${currentWeather.getDataseries().get(0).getTemp2m().getMin()}</td>
+                    <td>${currentWeather.getDataseries().get(0).getWind10mMax()}</td>
+                </tr>
+
+                <tr>
+                    <td>Tomorrow</td>
+                    <td>${currentWeather.getDataseries().get(1).getWeather()} </td>
+                    <td>${currentWeather.getDataseries().get(1).getTemp2m().getMax()}</td>
+                    <td>${currentWeather.getDataseries().get(1).getTemp2m().getMin()}</td>
+                    <td>${currentWeather.getDataseries().get(1).getWind10mMax()}</td>
+                </tr>
+
+                <tr>
+                    <td>Day After Tomorrow</td>
+                    <td>${currentWeather.getDataseries().get(2).getWeather()} </td>
+                    <td>${currentWeather.getDataseries().get(2).getTemp2m().getMax()}</td>
+                    <td>${currentWeather.getDataseries().get(2).getTemp2m().getMin()}</td>
+                    <td>${currentWeather.getDataseries().get(2).getWind10mMax()}</td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
 
         </article>
+
+
 
     </div>
 

@@ -1,6 +1,6 @@
 <row>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
-        <a class="navbar-brand" href="index.jsp">Homestead Project Planner</a>
+        <a class="navbar-brand" href="index">Homestead Project Planner</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#lab13Nav" aria-controls="lab13Nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

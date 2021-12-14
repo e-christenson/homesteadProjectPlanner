@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.internal.CoreLogging.logger;
+
 /**
  * Homestead Project Planer
  * add user servlet
@@ -59,8 +61,8 @@ public class StoreDeleteActionServlet extends HttpServlet {
 
         //function to check if store is empty for a particular
         //project and then set flag in project table
-        stores = sDao.findByPropertyEqual("project_id", Id);
-        System.out.println("storeLength ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+stores.size());
+        stores = sDao.findByPropertyEqual("project_id", projectId);
+        logger.info("storeLength ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+stores.size());
         checkStoreFlag(stores, loggedInUser);
 
 

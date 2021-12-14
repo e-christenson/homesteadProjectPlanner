@@ -4,6 +4,8 @@ import hpp.project.planner.entity.Project;
 import hpp.project.planner.entity.Store;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -27,7 +29,8 @@ import java.util.List;
         name = "index",
         urlPatterns = { "/index" }
 )
-public class UserProjectLoaderServlet extends HttpServlet {
+public class IndexLoadServlet extends HttpServlet {
+    private final Logger logger = LogManager.getLogger(this.getClass());
     List<Project> projects = new ArrayList<>();
     User loggedInUser;
 
@@ -50,9 +53,10 @@ public class UserProjectLoaderServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
         loggedInUser = (User) ses.getAttribute("cognitoUser");
-projects.clear();
+         projects.clear();
 //call with user to get projects
             projects = getProjectsFromUser(loggedInUser);
+            logger.info("Index servlet DOGET--------projects loaded, size is : "+projects.size());
             ses.setAttribute("projects", projects);
 
             String url = "/index.jsp";
@@ -66,9 +70,10 @@ projects.clear();
             throws ServletException, IOException {
         HttpSession ses= request.getSession();
         loggedInUser = (User) ses.getAttribute("cognitoUser");
-
+        projects.clear();
 //call with user to get projects
         projects = getProjectsFromUser(loggedInUser);
+        logger.info("Index servlet doPost--------projects loaded, size is : "+projects.size());
         ses.setAttribute("projects", projects);
 
         String url = "/index.jsp";

@@ -31,7 +31,7 @@
                 <p>A listing of all of your Homestead's projects.  You can click on the column header
                 to sort by field type. Projects can be edited or deleted by clicking on the action column links.</p>
 
-            <table id="ProjectsTable" class="display table table-sm table-bordered table-striped">
+            <table id="ProjectsTable" class="display table table-sm table-responsive-sm table-bordered table-striped">
                 <thead class="thead-dark">
 
                 <th>Name</th>
