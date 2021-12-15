@@ -1,7 +1,6 @@
 package hpp.project.planner.controller;
 
 import hpp.project.planner.entity.Project;
-import hpp.project.planner.entity.Store;
 import hpp.project.planner.entity.User;
 import hpp.project.planner.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
@@ -21,13 +20,15 @@ import java.util.List;
 
 
 /**
- *  unit4 lab2
+ * this class is used to gather data from the DB
+ * and then load it into session objects
+ * then the index.jsp page is called to display it all
  *
- *@author    EChristenson
+ * @author EChristenson
  */
 @WebServlet(
         name = "index",
-        urlPatterns = { "/index" }
+        urlPatterns = {"/index"}
 )
 public class IndexLoadServlet extends HttpServlet {
     private final Logger logger = LogManager.getLogger(this.getClass());
@@ -40,59 +41,76 @@ public class IndexLoadServlet extends HttpServlet {
 
 
     }
+
+
     /**
+     * Handles HTTP GET requests.
+     * finds whe is logged in, gets their projects, sets to session
      *
-     *  Handles HTTP GET requests.
-     *
-     *@param  request                   the HttpServletRequest object
-     *@param  response                   the HttpServletResponse object
-     *@exception  ServletException  if there is a Servlet failure
-     *@exception  IOException       if there is an IO failure
+     * @param request  the HttpServletRequest object
+     * @param response the HttpServletResponse object
+     * @throws ServletException if there is a Servlet failure
+     * @throws IOException      if there is an IO failure
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession ses= request.getSession();
-        loggedInUser = (User) ses.getAttribute("cognitoUser");
-         projects.clear();
-//call with user to get projects
-            projects = getProjectsFromUser(loggedInUser);
-            logger.info("Index servlet DOGET--------projects loaded, size is : "+projects.size());
-            ses.setAttribute("projects", projects);
-
-            String url = "/index.jsp";
-        RequestDispatcher  dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
-
-    }
-
-
-    public void doPost (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession ses= request.getSession();
+        HttpSession ses = request.getSession();
         loggedInUser = (User) ses.getAttribute("cognitoUser");
         projects.clear();
-//call with user to get projects
+
+        //call with user to get projects
         projects = getProjectsFromUser(loggedInUser);
-        logger.info("Index servlet doPost--------projects loaded, size is : "+projects.size());
+        logger.info("Index servlet DOGET--------projects loaded, size is : " + projects.size());
         ses.setAttribute("projects", projects);
 
         String url = "/index.jsp";
-        RequestDispatcher  dispatcher = getServletContext().getRequestDispatcher(url);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
 
+    }
+
+    /**
+     * Handles HTTP doPost requests.
+     * <p>
+     * users can come into this servelt with both styles of request
+     * depending where they are in the app.
+     * both methods have same functionality
+     * finds whe is logged in, gets their projects, sets to session
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession ses = request.getSession();
+        loggedInUser = (User) ses.getAttribute("cognitoUser");
+        projects.clear();
+        //call with user to get projects
+        projects = getProjectsFromUser(loggedInUser);
+        logger.info("Index servlet doPost--------projects loaded, size is : " + projects.size());
+        ses.setAttribute("projects", projects);
+
+        String url = "/index.jsp";
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
 
 
     }
 
 
+    /**
+     * send this method a user and it returns
+     * that users projects
+     *
+     * @param LoggedInUser
+     * @return
+     */
 
-
-
-
-
-    private List<Project> getProjectsFromUser(User LoggedInUser){
+    private List<Project> getProjectsFromUser(User LoggedInUser) {
         GenericDao pDao = new GenericDao(Project.class);
-        projects = pDao.findByPropertyEqual("user",loggedInUser);
+        projects = pDao.findByPropertyEqual("user", loggedInUser);
         return projects;
     }
 }

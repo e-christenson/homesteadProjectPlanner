@@ -19,7 +19,18 @@ public class ZipApiDao {
     private String cityName;
     private String LongLatt;
 
-
+    /**
+     * this takes a zipcode and returns a class (object) that
+     * has weather info.
+     *
+     * the city and location are saved in the class as well
+     * when a new user is called we can pull the location
+     * form this class to set in DB
+     *
+     * @param zipCode
+     * @return
+     * @throws JsonProcessingException
+     */
     public List<PlacesItem>  getCityState(int zipCode) throws JsonProcessingException {
         String apiUrl = "http://api.zippopotam.us/us/"+zipCode;
         Client client = ClientBuilder.newClient();
@@ -35,14 +46,22 @@ public class ZipApiDao {
 return  zipcode.getPlaces();
     }
 
-    public String getLocationFromZip() {
 
+    /**
+     * this method returns the City name
+     * @return
+     */
+    public String getLocationFromZip() {
     return cityName;
 
     }
 
-    public String getLongLatt() {
 
+    /**
+     * this method returns the location, formatted for the weather API
+     * @return
+     */
+    public String getLongLatt() {
                 return LongLatt;
 
     }

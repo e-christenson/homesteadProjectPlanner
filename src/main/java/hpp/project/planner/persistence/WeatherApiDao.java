@@ -18,7 +18,13 @@ public class WeatherApiDao {
 
     private String LongLatt;
 
-
+    /**
+     * takes a string of Long/Latt (formatted) and returns
+     * weather object loaded with current weather data
+     * @param longLatt
+     * @return
+     * @throws JsonProcessingException
+     */
     public Weather getWeather(String longLatt) throws JsonProcessingException {
         String apiUrl = "https://www.7timer.info/bin/civillight.php?"+longLatt+"&ac=0&unit=british&output=json&tzshift=0";
         logger.info("web address sent to api (built w location): "+apiUrl);
@@ -32,10 +38,6 @@ public class WeatherApiDao {
         Weather weather = mapper.readValue(response, Weather.class);
         return weather;
 
-        //String tempNow = String.valueOf(weather.getDataseries().get(0).getTemp2m());
-        //ZipCode zipcode = mapper.readValue(response, ZipCode.class);
-        //cityName = zipcode.getPlaces().get(0).getPlaceName();
-        //LongLatt = ("lon="+zipcode.getPlaces().get(0).getLongitude()+"&lat="+zipcode.getPlaces().get(0).getLatitude());
 
     }
 
