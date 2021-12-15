@@ -25,6 +25,19 @@ import java.util.List;
  *  unit4 lab2
  *
  *@author    EChristenson
+ *
+ *  ****warning********
+ *  this class will make your eyes bleed java Sherpa...
+ *  its the last thing I wrote and I could prob spend
+ *  a week improving / breaking it up / adding more conditions.
+ *  and if I understood concurrent action on arrayLists this could be
+ *  much simpler haha.
+ *
+ *
+ *  this class takess the list of ALL projects and then begins
+ *  removing projects based of Weather (at users zip ) conditions happening today
+ *
+ *
  */
 @WebServlet(
         name = "fProjects",

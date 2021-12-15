@@ -4,6 +4,7 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
+
   <error-page>
     <error-code>404</error-code>
     <location>/generalError.jsp</location>
@@ -16,6 +17,7 @@
     <error-code>500</error-code>
     <location>/generalError.jsp</location>
   </error-page>
+
 
 
 
