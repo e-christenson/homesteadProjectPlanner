@@ -11,31 +11,34 @@ What if we had an organizer app that could do not only keep track of our project
 ### Project Technologies/Techniques
 
 * Security/Authentication
-    * Tomcat's JDBC Realm Authentication
+    * Amazon AWS Cognito
 * Database
-    * MySQL 8.0.22
+    * MySQL hosted on AWS Beanstalk
 * ORM Framework
     * Hibernate 5
 * Dependency Management
     * Maven
 * Web Services consumed using Java
-    * NOAA for weather conditions at a trail location, including snow depth
+    * http://api.zippopotam.us/us/ --> used to turn zip codes to Long/Latt location 
+    * https://www.7timer.info/ --> used to get weather conditions from Long/Latt  
 * CSS
-    * Bootstrap or Materialize (tbd)
+    * Bootstrap 5
 * Data Validation
-    * Bootstrap Validator for front end
-    * Explore Hibernate's validation
+    * Bootstrap Validator for front end 
+    * combined with regular expression filters
+
 * Logging
     * Log4J2
 * Hosting
     * AWS
+    * 
 * Independent Research Topic/s
-    * CI tools in AWS
-    * Materialize
-    * Google Maps API
-    * Hibernate Validation
-    * Hibernate Search
-* Project Lombok
+    * Route 53 AWS (hosting/routing domain for project)
+    * AWS SSL Cert
+    * AWS Load balancer
+    * jquery / DataTables
+    
+* 
 * Unit Testing
     * JUnit tests to achieve 80%+ code coverage
 * IDE: IntelliJ IDEA
@@ -51,9 +54,12 @@ What if we had an organizer app that could do not only keep track of our project
 
 ### [Project Plan](ProjectPlan.md)
 
-### Examples of documentation of progress, reflections, and time spent on this class
-Choose a format that works for you, or create your own.
+
 
 #### [Weekly Reflection](WeeklyReflections.md)
 
 #### [TimeLog](TimeLog.md)
+
+
+### Video Demonstration of project:
+https://www.youtube.com/watch?v=e7oyGWn7GCw

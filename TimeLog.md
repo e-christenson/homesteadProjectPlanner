@@ -15,7 +15,7 @@
 | 11|  unit test |  1 | not much time due to team project |
 |12 | generic dao / cognito  |  6 | cognito working locally, starting to move to gen dao|
 | 13 |  api / generic dao | 8  | working with api and generic dao implementation |
-| 14|  aws |  8 |deployed on aws, display and add projects working, including weather from api |
-| 15|   |   | |
-| 16|   |   | |
+| 14|  aws |  15 |deployed on aws, display and add projects working, including weather from api |
+| 15|  edit projects | 15  | many changes on how table display works, added datatables framework| 
+| 16|   sorting projects|  15 | added sort, helper list, error page, cleaned up many classes |
 

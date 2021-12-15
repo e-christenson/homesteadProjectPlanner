@@ -143,3 +143,17 @@ next items to consider:
 * displaying more project data (weather / day) in a smart way 
 * removing old indvidual DAO's and making sure generic dao is tested 80%
 * carefully analyize project scope in readme, evaluation items, make final corrections to cours and plan
+
+### Week 15 / 16
+
+Tasks Completed:
+*  cleaned out old dao classes and legacy calls/tests
+*  added edit projects page
+*  changed table display to include icons (some used as links)
+*  added in sorting feature to remove projects by wind and temperature not matching
+*  extensive testing to find bugs / crash pages
+*  added in many checks to prevent crashes (verify user exists in session before running code)
+*  added in custom error jsp page
+*   recorded video of web app functionality and posted on youtube 
+
+next items to consider:
