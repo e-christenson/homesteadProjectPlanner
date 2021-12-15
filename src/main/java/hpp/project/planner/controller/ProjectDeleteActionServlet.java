@@ -17,7 +17,9 @@ import java.util.List;
 
 /**
  * Homestead Project Planer
- * add user servlet
+ * <p>
+ * this servlet takes a project, sent in request, to
+ * find that project and delete it.
  *
  * @author EChristenson
  */
@@ -31,7 +33,15 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     GenericDao dao;
     List<Project> projects;
 
-
+    /**
+     * this is loaded with a projectId
+     * that project is deleted by calling deleteUserProject method
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -50,7 +60,13 @@ public class ProjectDeleteActionServlet extends HttpServlet {
     public void init() throws ServletException {
     }
 
-
+    /**
+     * this method is called with a project ID
+     * it finds the project with that ID
+     * and deletes it
+     *
+     * @param projectId
+     */
     private void deleteUserProject(String projectId) {
         //turn project ID into object
         dao = new GenericDao(Project.class);
