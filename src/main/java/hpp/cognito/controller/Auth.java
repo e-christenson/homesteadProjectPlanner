@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @WebServlet(
         urlPatterns = {"/auth"}
 )
-// TODO if something goes wrong it this process, route to an error page. Currently, errors are only caught and logged.
+
 /**
  * Inspired by: https://stackoverflow.com/questions/52144721/how-to-get-access-token-using-client-credentials-using-java-code
  */
@@ -118,7 +118,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String url = "/index";
 
         if (authCode == null) {
-            //TODO forward to an error page or back to the login
+           url = "generalError.jsp";
         } else {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
@@ -135,29 +135,24 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
                 if (cognitoUser.getId() == -1) {
                     url = "userAdd.jsp";
-                    //TODO add user to DB and make userAdd jsp have logic to now modify a user
+
                 }
                 if (cognitoUser.getId() > 0) {
-                    //pull all projects with their ID and set into session
-                   // List<Project> projects = getProjectsById(cognitoUser.getId());
-                   // req.getSession().setAttribute("projects", projects);
 
                     //get weather info and add to session
-                    //adding current weather into the session for display
+                    //doing this here vs each refresh
                     WeatherApiDao wDao = new WeatherApiDao();
                     Weather currentWeather = wDao.getWeather(cognitoUser.getLonLat());
                     req.getSession().setAttribute("currentWeather",currentWeather);
 
-
                 }
-
 
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
-                //TODO forward to an error page
+                url = "generalError.jsp";
             } catch (InterruptedException e) {
                 logger.error("Error getting token from Cognito oauth url " + e.getMessage(), e);
-                //TODO forward to an error page
+                url = "generalError.jsp";
             }
         }
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);
@@ -207,12 +202,12 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         String keyId = tokenHeader.getKid();
         String alg = tokenHeader.getAlg();
 
-        // todo pick proper key from the two - it just so happens that the first one works for my case
+        // pick proper key from the two - it just so happens that the first one works for my case
         // Use Key's N and E
         BigInteger modulus = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getN()));
         BigInteger exponent = new BigInteger(1, org.apache.commons.codec.binary.Base64.decodeBase64(jwks.getKeys().get(0).getE()));
 
-        // TODO the following is "happy path", what if the exceptions are caught?
+        //the following is "happy path", what if the exceptions are caught? unsure ...
         // Create a public key
         PublicKey publicKey = null;
         try {
@@ -246,7 +241,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         //logger.debug("here's the zip from the map: " +zipCodeFromCog);
         logger.debug("here are all the available claims: " + jwt.getClaims());
 
-        // TODO decide what you want to do with the info!
+
         // going to return as user object for now
         cognitoUser = new User();
         cognitoUser.setName(userName);
@@ -315,7 +310,9 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * Read in the cognito props file and get/set the client id, secret, and required urls
      * for authenticating a user.
      */
-    // TODO This code appears in a couple classes, consider using a startup servlet similar to adv java project
+    // This code appears in a couple classes, consider using a startup servlet similar to adv java project--didn't get
+    //to that step.
+
     private void loadProperties() {
         try {
             properties = loadProperties("/cognito.properties");
@@ -335,29 +332,22 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
 
     /**
-     * private int getZipFromAddressMap(Map address){
-     * <p>
-     * String addressString = String.valueOf(address);
-     * logger.info("processing zip code, string value: "+addressString);
-     * <p>
-     * String[] z = addressString.split("\\d{5}");
-     * String zi = String.valueOf(z);
-     * logger.info("processing zip code, string after regex match: "+zi);
-     * int zip = Integer.parseInt(zi);
-     * return zip;
-     * }
+     *  method checks if a cognito user is in the HPP user table
+     *  and returns the user ID .
+     *  new users get set to -1 ID
+     *
+     * @param signedInCognitoUser
+     * @return
      */
-
     private int getIdOfCognitoUser(User signedInCognitoUser) {
         GenericDao dao = new GenericDao(User.class);
         List<User> users = dao.findByPropertyEqual("email", signedInCognitoUser.getEmail());
 
+        int userID;
         //a new user will have a null return on this call, we assign them -1 ID
         //and use that later to prompt new user entry into db
-        int userID;
-
         if (users.size() > 0) {
-//we know we have a matching user here, so we get the ID and also the zip
+        //we know we have a matching user here, so we get the ID and also the zip
             //for the cognitoUser object
             userID = users.get(0).getId();
             cognitoUser.setZip_code(users.get(0).getZip_code());
@@ -370,14 +360,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         return userID;
     }
 
-/**
-    private List<Project> getProjectsById(int idNum) {
-        GenericDao dao = new GenericDao(Project.class);
-        List<Project> projects = dao.findByPropertyEqual("user", idNum);
 
-        return projects;
-    }
-*/
 
 
 }
