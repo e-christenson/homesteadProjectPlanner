@@ -19,11 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hibernate.internal.CoreLogging.logger;
-
 /**
  * Homestead Project Planer
- * add user servlet
+ * store item delete servlet
  *
  * @author EChristenson
  */
@@ -41,20 +39,29 @@ public class StoreDeleteActionServlet extends HttpServlet {
     User loggedInUser;
 
 
-
+    /**
+     * when this is loaded a store ID (indv. item) is sent to it
+     * it finds and deletes the item from store table
+     * it also manages store= "y" flag in projects table.
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession ses= request.getSession();
+        HttpSession ses = request.getSession();
         loggedInUser = (User) request.getSession().getAttribute("cognitoUser");
 
         int Id = Integer.parseInt(request.getParameter("Id"));
         Store store = (Store) sDao.getById(Id);
-         projectId = store.getProject();
+        projectId = store.getProject();
 
 
         //user can have a stale page on browser, so if we come into this
         //servlet w/o session data we skip the delete and go to login screen
-        if (store != null){
+        if (store != null) {
 
             sDao.delete(store);
         }
@@ -62,10 +69,8 @@ public class StoreDeleteActionServlet extends HttpServlet {
         //function to check if store is empty for a particular
         //project and then set flag in project table
         stores = sDao.findByPropertyEqual("project_id", projectId);
-        logger.info("storeLength ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+stores.size());
+        logger.info("storeLength ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + stores.size());
         checkStoreFlag(stores, loggedInUser);
-
-
 
 
         String url = "/storeList";
@@ -75,14 +80,20 @@ public class StoreDeleteActionServlet extends HttpServlet {
     }
 
 
-
     public void init() throws ServletException {
 
     }
 
-private void checkStoreFlag(List<Store> stores,User loggedInUser){
+    /**
+     * this method manages the store flag in the projects table
+     * when the store table is 0 for a project, its flag is removed
+     *
+     * @param stores
+     * @param loggedInUser
+     */
+    private void checkStoreFlag(List<Store> stores, User loggedInUser) {
 
-        if (stores.size() == 0){
+        if (stores.size() == 0) {
             Project project = (Project) pDao.getById(projectId);
             project.setStore(null);
             loggedInUser.addProject(project);
@@ -90,8 +101,7 @@ private void checkStoreFlag(List<Store> stores,User loggedInUser){
 
         }
 
-}
-
+    }
 
 
 }
