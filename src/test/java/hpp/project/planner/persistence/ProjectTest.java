@@ -41,7 +41,7 @@ class ProjectTest {
 
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
-        System.out.println("^^^^^^^^^^^^setup ran^^^^^^^^^^^^^^^ ");
+
 
     }
 
@@ -107,7 +107,7 @@ class ProjectTest {
 
 
         projects = dao.findByPropertyEqual("id",1);
- System.out.println("what projects do we have???????? "+projects);
+
        // System.out.println("what STORES do we have???????? "+projects.get(0).getStores());
 
 
