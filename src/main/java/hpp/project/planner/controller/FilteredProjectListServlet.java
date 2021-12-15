@@ -80,19 +80,22 @@ Weather weather;
 
 
 //function to loop through projects in session, pull non-match, return list projects
-        removeByWind(allProjects,weather);
-        removedWind = allProjects.size()-wProjects.size();
-        removeByHot(wProjects,weather);
-        removedHot = wProjects.size()-hProjects.size();
-        removeByCold(hProjects,weather);
-        removedCold = hProjects.size()-fProjects.size();
+        if (cognitoUser != null) {
+            removeByWind(allProjects, weather);
+            removedWind = allProjects.size() - wProjects.size();
 
-request.setAttribute("fProjects", fProjects);
-request.setAttribute("removedWind", removedWind);
-        request.setAttribute("removedHot", removedHot);
-        request.setAttribute("removedCold", removedCold);
+            removeByHot(wProjects, weather);
+            removedHot = wProjects.size() - hProjects.size();
+
+            removeByCold(hProjects, weather);
+            removedCold = hProjects.size() - fProjects.size();
+
+            request.setAttribute("fProjects", fProjects);
+            request.setAttribute("removedWind", removedWind);
+            request.setAttribute("removedHot", removedHot);
+            request.setAttribute("removedCold", removedCold);
 //clear the list after we set it
-
+        }
 
             String url = "/filteredProjects.jsp";
 
@@ -112,13 +115,13 @@ request.setAttribute("removedWind", removedWind);
             for (Project project : projects) {
                 if (project.getWindy() == null) {
                     wProjects.add(project);
-                    logger.info("null MATCH added to fProjects" + fProjects.size());
+                    logger.info("null MATCH added to WWWWWW wProjects" + wProjects.size());
 
                 } else {
                     if (!project.getWindy().equals("c")) {
 
                         wProjects.add(project);
-                        logger.info("not c MATCH added to fProjects" + fProjects.size());
+                        logger.info("not c MATCH added to WWWW wProjects" + wProjects.size());
                     }
                 }
             }
@@ -131,7 +134,7 @@ request.setAttribute("removedWind", removedWind);
 
     private void removeByHot(List<Project> projects, Weather weather) {
 
-        logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
+        logger.info("max temp score: " + weather.getDataseries().get(0).getTemp2m().getMax());
         //loop through projects, push all BUT calm wind projects to fProjects
         // wind10Max above 2 is high winde
         if (weather.getDataseries().get(0).getTemp2m().getMax() < hot) {
@@ -139,13 +142,13 @@ request.setAttribute("removedWind", removedWind);
             for (Project project : projects) {
                 if (project.getHot_cold() == null) {
                     hProjects.add(project);
-                    logger.info("null MATCH in remHOt added to fProjects" + fProjects.size());
+                    logger.info("null MATCH in remHOt added to HHHH hProjects" + hProjects.size());
 
                 } else {
                     if (!project.getHot_cold().equals("h")) {
 
                         hProjects.add(project);
-                        logger.info("not hot MATCH added to fProjects" + fProjects.size());
+                        logger.info("not hot MATCH added to HHHH hProjects" + hProjects.size());
                     }
                 }
             }
@@ -156,11 +159,12 @@ request.setAttribute("removedWind", removedWind);
 
     private void removeByCold(List<Project> projects, Weather weather) {
 
-        logger.info("wind score: " + weather.getDataseries().get(0).getWind10mMax());
+        logger.info("inside removeBycold api low temp === " + weather.getDataseries().get(0).getTemp2m().getMin());
         //loop through projects, push all BUT calm wind projects to fProjects
         // wind10Max above 2 is high winde
         if (weather.getDataseries().get(0).getTemp2m().getMin() > cold) {
             //sendProjects(projects);
+            logger.info("inside if, we are above the cold cutoff condition");
             for (Project project : projects) {
                 if (project.getHot_cold() == null) {
                     fProjects.add(project);

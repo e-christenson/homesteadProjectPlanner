@@ -10,9 +10,11 @@
                     <a class="nav-link" href="projectAdd.jsp">Add Project<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link" href="fProjects">Suggested Projects</a></li>
+                    <a  class="nav-link" href="fProjects">Today's Projects</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="storeList">Store List</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="myHelp.jsp">Projects w/ Helpers</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href = "logout">Log Out</a> </li>
             </ul>

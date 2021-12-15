@@ -27,9 +27,9 @@
             <div class="form-group">
             <label for="projectName">Project Name</label>
 
-                <input type="text" value="${projectEdit.project_name} " name="projectName" id="projectName" class="form-control" pattern="[a-zA-z\d][^{}]{1,40}" required /><br />
+                <input type="text" value="${projectEdit.project_name} " name="projectName" id="projectName" class="form-control" pattern="[a-zA-z\d][^{}]{1,99}" required /><br />
                 <div class="valid-feedback">Looks good!</div>
-                <div class="invalid-feedback">Something isn't right. up to 40 characters, letters numbers ok, no {} allowed </div>
+                <div class="invalid-feedback">Something isn't right. up to 99 characters, letters numbers ok, no {} allowed </div>
             </div>
 
             <div class="form-group">
@@ -54,8 +54,9 @@
 
 
                 <label for="store">enter additional items</label>
-                <input type="text"  name="store" id="store"/><br />
-
+                <input type="text"  name="store" id="store" class="form-control" pattern="[a-zA-z\d][^{}]{1,99}" /><br />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Something isn't right. up to 99 characters, letters numbers ok, no {} allowed </div>
 
 
             </div>

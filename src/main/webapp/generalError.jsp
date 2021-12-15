@@ -9,16 +9,18 @@
 
     <div class="row">
 
-        <div class="container theme-showcase" role="main">
+        <div class="container theme-showcase col-8" role="main">
 
             <div class="alert alert-danger" role="alert">
-                <strong>Yeah...</strong> Houston we have a problem
+                <strong>Yeah...Houston we have a problem</strong>
+                <p>id  10t  error.  possible pebkac.  technical difficulties.  </p>
             </div>
 
         </div>
 
     </div>
-    <h2><a href="logIn">--->>> Log in <<<---</a></h2>
+
+    <h2><a href="logIn">try logging in / going to the main page</a></h2>
 
 
 

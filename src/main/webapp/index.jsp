@@ -53,7 +53,8 @@
 
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="images/helper.png"  width="25" height="25" alt="w">
+                                        <a class="nav-link" href="myHelp.jsp"><img src="images/helper.png"  width="25" height="25" alt="H"></a></li>
+
                                     </c:otherwise>
                                 </c:choose>
 
@@ -62,7 +63,8 @@
 
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="images/store.png"  width="25" height="25" alt="w">
+                                        <a class="nav-link" href="storeList"><img src="images/store.png"  width="30" height="30" alt="H"></a></li>
+
                                     </c:otherwise>
                                 </c:choose>
 
@@ -125,10 +127,10 @@
                 <thead class="thead-success">
 
                 <th>Day</th>
-                <th>Condition</th>
+                <th>--- </th>
                 <th>High</th>
                 <th>Low</th>
-                <th>MaxWind(0-5)</th>
+                <th>Wind (0-5)</th>
 
                 </thead>
                 <tbody>
